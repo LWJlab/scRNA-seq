@@ -6,40 +6,23 @@ library(SeuratObject)
 
 options(stringsAsFactors=FALSE)
 
-### Data loading ###
-GSE151974_raw_count <- read.csv('GSE151974_raw_umi_matrix_postfilter.csv', row.names = 1)
-dim(GSE151974_raw_count)
+### Data importing ###
+raw_count <- read.csv('GSE151974_raw_umi_matrix_postfilter.csv', row.names = 1)
+metadata <- read.csv('GSE151974_cell_metadata_postfilter.csv', row.names = 1)
 
-GSE151974_metadata <- read.csv('GSE151974_cell_metadata_postfilter.csv', row.names = 1)
-head(GSE151974_metadata)
-dim(GSE151974_metadata)
-table(GSE151974_metadata$CellType, GSE151974_metadata$Oxygen)
+sce <- CreateSeuratObject(counts = raw_count,
+                          meta.data = metadata)
 
-GSE151974_seurat <- CreateSeuratObject(counts = GSE151974_raw_count,
-                                       meta.data = GSE151974_metadata)
+### P7 seperation ###
+Idents(sce) <- 'CellType'
+unique(sce$CellType)
+subset <- subset(sce, idents = c('Cap-a', 'Art', 'Cap', 'Vein', 'Col13a1+ fibroblast', 'Col14a1+ fibroblast', 'Myofibroblast','SMC'))
+Idents(subset) <- 'Sample'
+P7_subset <- subset(subset, idents = c('P7_Hyperoxia', 'P7_Normoxia'))
 
-head(GSE151974_seurat)
-
-Idents(GSE151974_seurat) <- 'CellType'
-
-unique(GSE151974_seurat$CellType)
-
-GSE151974_subset <- subset(GSE151974_seurat, idents = c('Cap-a', 'Art', 'Cap', 'Vein', 
-                                                        'Col13a1+ fibroblast', 'Col14a1+ fibroblast', 'Myofibroblast',
-                                                        'SMC'))
-GSE151974_seurat
-
-###### P7 ######
-Idents(GSE151974_subset) <- 'Sample'
-GSE151974_subset_P7 <- subset(GSE151974_subset, idents = c('P7_Hyperoxia', 'P7_Normoxia'))
-unique(GSE151974_subset_P7$orig.ident)
-Idents(GSE151974_subset_P7)
-
-###ProcessExper
-setwd('/data2/fanjie/Yao_H/')
-source('/data2/fanjie/Yao_H/processExper.R')
-
-GSE151974_subset_P7_integrated = processExper(GSE151974_subset_P7, 
+### ProcessExper ###
+source('./processExper.R')
+GSE151974_subset_P7_integrated = processExper(P7_subset, 
                                               org = 'mus',
                                               cyclescoring = F,
                                               sct.method = T,
