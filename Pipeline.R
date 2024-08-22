@@ -298,29 +298,29 @@ gsea_res1 <- do.call(rbind, gsea_res1) %>% t()
 ### GSEA sigPathway visualization ###
 sigPathway <- read.csv("P7_EndoMT_Hyperoxia_vs_Normoxia_GSEA_sigPathway.csv", header = T)
 
-bar <- my_GSEAbarplot(sigPathway, 
-                      levels = ft[1:7], # A list in a specific order
-                      maxPathway = c('Carbohydrate catabolic process',
-                                     'ADP metabolic process',
-                                     'Membrane lipid metabolic process',
-                                     'Positive regulation of Erk1 and Erk2 cascade',
-                                     'Cytokine mediated signaling pathway',
-                                     'p53 signaling pathway',
-                                     'Interleukin-4 and interleukin-13 signaling'
-                                    ),
-                      title = 'Hyperoxia vs. Normoxia (EndoMT)',
-                      group_color = 'grey10',
-                      pathway_color = c("Carbohydrate metabolism" = "#66C2A5", 
-                                        "Energy metabolism" = "#8DA0CB", 
-                                        "Lipid metabolism" = "#A6D854", 
-                                        "Signal transduction" = "#6a3d9a",
-                                        "Signaling molecules and interaction" = '#E5C494',
-                                        "Cell growth and death" = '#FC8D62',
-                                        "Immune system" = '#E78AC3'),
-                      title_size = rel(1),
-                      num_size = 2.5,
-                      text_x_size = rel(1),
-                      text_y_size = rel(1),
-                      xlim = c(0, 2.3))
+bar <- sce_GSEAbarplot(sigPathway, 
+                       levels = ft[1:7], # A list in a specific order
+                       maxPathway = c('Carbohydrate catabolic process',
+                                      'ADP metabolic process',
+                                      'Membrane lipid metabolic process',
+                                      'Positive regulation of Erk1 and Erk2 cascade',
+                                      'Cytokine mediated signaling pathway',
+                                      'p53 signaling pathway',
+                                      'Interleukin-4 and interleukin-13 signaling'
+                                     ),
+                       title = 'Hyperoxia vs. Normoxia (EndoMT)',
+                       group_color = 'grey10',
+                       pathway_color = c("Carbohydrate metabolism" = "#66C2A5", 
+                                         "Energy metabolism" = "#8DA0CB", 
+                                         "Lipid metabolism" = "#A6D854", 
+                                         "Signal transduction" = "#6a3d9a",
+                                         "Signaling molecules and interaction" = '#E5C494',
+                                         "Cell growth and death" = '#FC8D62',
+                                         "Immune system" = '#E78AC3'),
+                       title_size = rel(1),
+                       num_size = 2.5,
+                       text_x_size = rel(1),
+                       text_y_size = rel(1),
+                       xlim = c(0, 2.3))
 
 bar
