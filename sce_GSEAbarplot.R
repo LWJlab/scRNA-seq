@@ -1,14 +1,14 @@
-my_GSEAbarplot <- function(object, # A dataframe containing Pathway1, Pathway2 and NES columns
-                           levels = NULL, # A list that is arranged according to the order of Pathway1
-                           maxPathway = NULL, # A list of the pathways with the highest NES values in each category within Pathway2.
-                           category_color = 'grey10', # The color codes for category of pathways
-                           pathway_color = NULL, # A list of pathways and their corresponding color codes
-                           title = NULL, # The title of dotplot
-                           title_size = NULL, # The size of title
-                           num_size = NULL, # The size of number
-                           text_x_size = 10, # The size of x-axis text (Default: 10)
-                           text_y_size = 10, # The size of y-axis text (Default: 10)
-                           xlim = c(0, 2.5) # A list of x-axis boundary
+sce_GSEAbarplot <- function(object, # A dataframe containing Pathway1, Pathway2 and NES columns
+                            levels = NULL, # A list that is arranged according to the order of Pathway1
+                            maxPathway = NULL, # A list of the pathways with the highest NES values in each category within Pathway2.
+                            category_color = 'grey10', # The color codes for category of pathways
+                            pathway_color = NULL, # A list of pathways and their corresponding color codes
+                            title = NULL, # The title of dotplot
+                            title_size = NULL, # The size of title
+                            num_size = NULL, # The size of number
+                            text_x_size = 10, # The size of x-axis text (Default: 10)
+                            text_y_size = 10, # The size of y-axis text (Default: 10)
+                            xlim = c(0, 2.5) # A list of x-axis boundary
                            ){
   
   suppressPackageStartupMessages({
