@@ -1,5 +1,4 @@
 processExper <- function(object, 
-                         org = c("hsa", "mmu"),
                          sct.method = F,
                          reduction = "cca"){
   suppressPackageStartupMessages({
@@ -7,10 +6,6 @@ processExper <- function(object,
     library(glmGamPoi)
     library(dplyr)
     library(tidyverse)})
-  
-  if(org != "hsa" & org != "mmu") {
-    stop("Please input hsa or mmu for org!")
-  }
   
   # Single scobj
   if(length(table(object$Sample)) < 2) {
