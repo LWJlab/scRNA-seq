@@ -116,3 +116,40 @@ P7_integrated <- RenameIdents(P7_integrated, cluster_ids1)
 P7_integrated$Celltype_main <- Idents(P7_integrated)
 
 
+### Cell atlas visualization###
+atlas <- cellatlas_umap(P7_integrated, 
+                        idents = 'Celltype',
+                        levels = c('gCap',
+                                   'aCap',
+                                   'Art',
+                                   'Vein',
+                                   'EndoMT',
+                                   'Fibroblast',
+                                   'Myofibroblast',
+                                   'SMC'), 
+                        hull_alpha = 0.1, 
+                        hull_size = 0.5, 
+                        hull_lty = 2,
+                        hull_delta = 0.8,
+                        dot_color = c("#ea5c6f","#f7905a","#e187cb","#fb948d","#e2b159","#ebed6f","#b2db87","#7ee7bb"),  
+                        dot_size = 0.5,
+                        dot_alpha = 1, 
+                        label_size = 4, 
+                        label_color = F 
+                        )
+atlas
+
+oxygen_atlas <- cellatlas_umap(P7_integrated, 
+                               idents = 'Oxygen',
+                               levels = c('Normoxia','Hyperoxia'),
+                               hull_alpha = 0,
+                               hull_size = 0, 
+                               hull_lty = 2, 
+                               hull_delta = 0, 
+                               dot_color = c("#4DBBD5FF",'#E64B35FF'),  
+                               dot_size = 0.5, 
+                               dot_alpha = 1, 
+                               label_size = 4, 
+                               label_color = T 
+)
+oxygen_atlas
