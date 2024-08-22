@@ -1,4 +1,3 @@
-
 processExper <- function(object, 
                          org = c("hsa", "mmu"),
                          cyclescoring = T,
@@ -20,12 +19,12 @@ processExper <- function(object,
   # Single scobj
   if(length(table(object$Sample)) < 2) {
     object <- object %>%
-      NormalizeData(normalization.method = "LogNormalize",
-                    scale.factor = 10000,
-                    verbose = T) %>%
-      FindVariableFeatures(selection.method = "vst", 
-                           nfeatures = 2000, 
-                           verbose = T) 
+              NormalizeData(normalization.method = "LogNormalize",
+                            scale.factor = 10000,
+                            verbose = T) %>%
+              FindVariableFeatures(selection.method = "vst", 
+                                   nfeatures = 2000, 
+                                   verbose = T) 
     if(cyclescoring == T){
       if(org == 'hsa'){
         # Assign scores in the CellCycleScoring function. Stores S and G2/M scores in object@meta.data, along with the predicted classification of each cell in either G2M or S phase
@@ -69,7 +68,7 @@ processExper <- function(object,
       }
     }  
     
-    #Multiple scobjs
+    # Multiple scobjs
   }else{ 
     object <- SplitObject(object, split.by = 'Sample')
     
@@ -82,15 +81,15 @@ processExper <- function(object,
                                    normalization.method = "LogNormalize",
                                    scale.factor = 10000,
                                    verbose = T) %>%
-        FindVariableFeatures(selection.method = "vst", 
-                             nfeatures = 2000, 
-                             verbose = T) 
+                     FindVariableFeatures(selection.method = "vst", 
+                                          nfeatures = 2000, 
+                                          verbose = T) 
     }
     
     for (i in 1:length(object)) {
       if(cyclescoring == T){
         if(org == 'hsa'){
-          #Assign scores in the CellCycleScoring function.Stores S and G2/M scores in object@meta.data, along with the predicted classification of each cell in either G2M, S or G1 phase
+          # Assign scores in the CellCycleScoring function.Stores S and G2/M scores in object@meta.data, along with the predicted classification of each cell in either G2M, S or G1 phase
           object[[i]] <- CellCycleScoring(object = object[[i]], 
                                           s.features = cc.genes.updated.2019$s.genes, 
                                           g2m.features = cc.genes.updated.2019$g2m.genes)
