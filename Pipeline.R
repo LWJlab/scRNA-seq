@@ -185,3 +185,35 @@ P7_dotplot <- sce_dotplot(P7_integrated,
 P7_dotplot
 
 
+### Trajectory analysis ###
+library(slingshot)
+
+P7_integrated1 <- as.SingleCellExperiment(P7_integrated, assay = 'SCT')
+
+sds <- slingshot(P7_integrated1, 
+                 clusterLabels = "Celltype_main",
+                 reducedDim = 'UMAP' ,
+                 start.clus = "Endothelium")
+
+source('./pseudotime_umap.R')
+pseu1 <- pseudotime_umap(P7_integrated,
+                         pseudotime_obj = sds,
+                         idents = 'Celltype',  
+                         sub_idents = 'slingPseudotime_1', 
+                         dot_color = c("#440154FF", "#FDE725FF"),
+                         dot_size = 0.5, 
+                         dot_alpha = 1, 
+                         label_size = 4
+                        )
+pseu1
+
+pseu2 <- pseudotime_umap(P7_integrated,
+                         pseudotime_obj = sds,
+                         idents = 'Celltype',  
+                         sub_idents = 'slingPseudotime_2', 
+                         dot_color = c("#440154FF", "#FDE725FF"),
+                         dot_size = 0.5, 
+                         dot_alpha = 1, 
+                         label_size = 4
+                        )
+pseu2
