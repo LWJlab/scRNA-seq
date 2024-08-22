@@ -40,6 +40,25 @@ clustree(P7_integrated) # Select suitable resolution
 P7_integrated <- FindClusters(P7_integrated, resolution = 0.5)
 
 ### Cell annotation ###
+DotPlot(P7_integrated, 
+        assay = 'SCT',
+        group.by = 'Celltype',
+        features = c('Gpihbp1', 'Kit', # gCap
+                     'Car4', 'Kdr', # aCap
+                     'Cxcl12', 'Pcsk5', # Art
+                     'Vegfc', 'Prss23', # Vein
+                     'Pecam1', 'Eng', 'Cd34', 'Cdh5', # Gen ECs
+                     'Col1a1', 'Col1a2', 'Col3a1', 'Fn1', 'Tagln', 'Acta2', 'Myl9', 'Myh11', # Mesenchyme
+                     'Tgfbi','Wnt5a' #Myofibroblast
+                     ) 
+        ) +
+ theme(axis.title =element_blank(),
+        axis.line = element_blank(),
+        axis.ticks.x =element_blank(),
+        axis.text.x = element_text(size=10),
+        panel.background = element_rect(color = 'black'))+
+  coord_flip()
+
 cluster_ids <- c("gCap",          #cluster 0
                  "Fibroblast",    #cluster 1
                  "Fibroblast",    #cluster 2
