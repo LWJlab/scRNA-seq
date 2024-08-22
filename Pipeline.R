@@ -185,6 +185,36 @@ P7_dotplot <- sce_dotplot(P7_integrated,
 P7_dotplot
 
 
+### Dotplot of metabolism-related genes ###
+marker1 = c('Adh5','Aldh3a2','Gapdh','Gpi1','Ldha','Pkm','Slc2a1', # Glycolysis
+            'Acat1','Aldh7a1','Gcdh',  # Amino acid metabolism
+            'Cpt1a','Cpt1c','Cpt2', # Carnitine shuttle
+            'Acaa2','Acadm','Acads','Acadsb','Acadvl','Acox3','Echs1','Eci1','Eci2','Hadh','Hadha','Hadhb', # β-oxidation
+            'Acsl1','Acsl4','Acaca','Degs1', # Fatty acid synthesis
+            'Cyc1','Ndufs1','Ndufs2','Ndufs3','Sdha' # Oxidative phosphorylation
+            )
+
+P7_Ec_dotplot <- sce_dotplot(subset(GSE151974_subset_P7_integrated1, idents = c('gCap','aCap','Art','Vein','EndoMT')),
+                             assay = 'SCT',
+                             idents = 'Oxygen',
+                             markers = marker1,
+                             levels = c('Normoxia', 'Hyperoxia'),
+                             title = 'Endothelium',
+                             title_size = 10
+                             )
+
+P7_EndoMT_dotplot <- sce_dotplot(subset(GSE151974_subset_P7_integrated1, idents = c('EndoMT')),
+                                 assay = 'SCT',
+                                 idents = 'Oxygen',
+                                 markers = marker1,
+                                 levels = c('Normoxia', 'Hyperoxia'),
+                                 title = 'EndoMT',
+                                 title_size = 10
+                                 )
+
+wrap_plots(P7_Ec_dotplot + P7_EndoMT_dotplot)
+
+
 ### Trajectory analysis ###
 library(slingshot)
 
@@ -217,3 +247,4 @@ pseu2 <- pseudotime_umap(P7_integrated,
                          label_size = 4
                         )
 pseu2
+
