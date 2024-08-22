@@ -1,5 +1,5 @@
 ###################################
-############ GSE151974 ############
+##### GEO accession:GSE151974 #####
 ###################################
 library(Seurat)
 library(SeuratObject)
@@ -8,8 +8,8 @@ library(patchwork)
 options(stringsAsFactors=FALSE)
 
 ### Data importing ###
-raw_count <- read.csv('GSE151974_raw_umi_matrix_postfilter.csv', row.names = 1)
-metadata <- read.csv('GSE151974_cell_metadata_postfilter.csv', row.names = 1)
+raw_count <- read.csv('GSE151974_raw_umi_matrix_postfilter.csv', row.names = 1) # https://ftp.ncbi.nlm.nih.gov/geo/series/GSE151nnn/GSE151974/suppl/GSE151974%5Fcell%5Fmetadata%5Fpostfilter.csv.gz
+metadata <- read.csv('GSE151974_cell_metadata_postfilter.csv', row.names = 1) # https://ftp.ncbi.nlm.nih.gov/geo/series/GSE151nnn/GSE151974/suppl/GSE151974%5Fraw%5Fumi%5Fmatrix%5Fpostfilter.csv.gz
 
 sce <- CreateSeuratObject(counts = raw_count,
                           meta.data = metadata)
@@ -116,7 +116,8 @@ P7_integrated <- RenameIdents(P7_integrated, cluster_ids1)
 P7_integrated$Celltype_main <- Idents(P7_integrated)
 
 
-### Cell atlas visualization###
+### Cell atlas visualization ###
+source('./cellatlas_umap.R')
 atlas <- cellatlas_umap(P7_integrated, 
                         idents = 'Celltype',
                         levels = c('gCap',
@@ -153,5 +154,34 @@ oxygen_atlas <- cellatlas_umap(P7_integrated,
                                label_color = T 
 )
 oxygen_atlas
+
+
+### Dotplot of cell markers ###
+source('./sce_dotplot.R')
+marker = c('Gpihbp1', 'Kit', # gCap
+           'Car4', 'Kdr',  # aCap
+           'Cxcl12', 'Pcsk5', # Art
+           'Vegfc', 'Prss23', # Vein
+           'Pecam1','Eng', 'Cd34', 'Cdh5', # General Endothelium
+           'Col1a1', 'Col1a2', 'Col3a1', 'Fn1', 'Tagln', 'Acta2', 'Myl9','Myh11', # Mesenchyme
+           'Tgfbi','Wnt5a' # Myofibroblast
+          )
+
+P7_dotplot <- sce_dotplot(P7_integrated,
+                          assay = 'SCT',
+                          idents = 'Celltype',
+                          markers = marker,
+                          levels = c('gCap',
+                                     'aCap',
+                                     'Art',
+                                     'Vein',
+                                     'EndoMT',
+                                     'Fibroblast',
+                                     'Myfibroblast',
+                                     'SMC'
+                                    ), 
+                          )
+
+P7_dotplot
 
 
