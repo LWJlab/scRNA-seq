@@ -1,4 +1,4 @@
-cellatlas_umap <- function(object, 
+cellatlas_umap <- function(object, # scobj
                            idents = NULL, # The column in the metadata of scobj
                            levels = NULL, # A list in a specific order
                            hull_alpha = NULL, # The transparency of hull
@@ -10,7 +10,8 @@ cellatlas_umap <- function(object,
                            dot_alpha = NULL, # The transparency of dot
                            label_size = NULL, # The size of label
                            label_color = F # The color of label (Default: black)
-                           ){
+                          ){
+  
   suppressPackageStartupMessages({
     library(Seurat)
     library(ggrepel)
@@ -23,10 +24,12 @@ cellatlas_umap <- function(object,
   df <- object@reductions$umap@cell.embeddings %>%
         as.data.frame() %>% 
         cbind(cell_type = object@meta.data$Custom)
+  
   df$cell_type <- factor(x = df$cell_type, 
                          levels = levels)
   
   colors <- dot_color
+  
   p <- ggplot(df, aes(x = UMAP_1, 
                       y = UMAP_2, 
                       color = cell_type)) +
