@@ -36,8 +36,8 @@ dims = 1:40
 P7_integrated <- RunUMAP(P7_integrated,
                          dims = dims,
                          reduction.name = "umap") %>%
-                 FindNeighbors(dims = dims) %>%
-                 FindClusters(resolution = c(seq(0, 1, .1)))
+  FindNeighbors(dims = dims) %>%
+  FindClusters(resolution = c(seq(0, 1, .1)))
 
 clustree(P7_integrated) # Select suitable resolution
 
@@ -46,23 +46,23 @@ P7_integrated <- FindClusters(P7_integrated, resolution = 0.5)
 
 ### Cell annotation ###
 p <- DotPlot(P7_integrated, 
-            assay = 'SCT',
-            group.by = 'Celltype',
-            features = c('Gpihbp1', 'Kit', # gCap
-                         'Car4', 'Kdr', # aCap
-                         'Cxcl12', 'Pcsk5', # Art
-                         'Vegfc', 'Prss23', # Vein
-                         'Pecam1', 'Eng', 'Cd34', 'Cdh5', # Gen ECs
-                         'Col1a1', 'Col1a2', 'Col3a1', 'Fn1', 'Tagln', 'Acta2', 'Myl9', 'Myh11', # Mesenchyme
-                         'Tgfbi','Wnt5a' #Myofibroblast
-                         ) 
-            ) +
-    theme(axis.title =element_blank(),
-          axis.line = element_blank(),
-          axis.ticks.x =element_blank(),
-          axis.text.x = element_text(size=10),
-          panel.background = element_rect(color = 'black'))+
-    coord_flip()
+             assay = 'SCT',
+             group.by = 'Celltype',
+             features = c('Gpihbp1', 'Kit', # gCap
+                          'Car4', 'Kdr', # aCap
+                          'Cxcl12', 'Pcsk5', # Art
+                          'Vegfc', 'Prss23', # Vein
+                          'Pecam1', 'Eng', 'Cd34', 'Cdh5', # Gen ECs
+                          'Col1a1', 'Col1a2', 'Col3a1', 'Fn1', 'Tagln', 'Acta2', 'Myl9', 'Myh11', # Mesenchyme
+                          'Tgfbi','Wnt5a' #Myofibroblast
+             ) 
+) +
+  theme(axis.title =element_blank(),
+        axis.line = element_blank(),
+        axis.ticks.x =element_blank(),
+        axis.text.x = element_text(size=10),
+        panel.background = element_rect(color = 'black'))+
+  coord_flip()
 
 p1 <- DimPlot(P7_integrated, 
               reduction = "umap", 
@@ -86,7 +86,7 @@ cluster_ids <- c("gCap",          #cluster 0
                  "Fibroblast",    #cluster 13
                  "Myofibroblast", #cluster 14
                  "Fibroblast"     #cluster 15
-                )
+)
 
 names(cluster_ids) <- levels(P7_integrated)
 P7_integrated <- RenameIdents(P7_integrated, cluster_ids)
@@ -109,7 +109,7 @@ cluster_ids1 <- c("Endothelium",   #cluster 0
                   "Fibroblast",    #cluster 13
                   "Myofibroblast", #cluster 14
                   "Fibroblast"     #cluster 15
-                  )
+)
 
 names(cluster_ids1) <- levels(P7_integrated)
 P7_integrated <- RenameIdents(P7_integrated, cluster_ids1)
@@ -137,7 +137,7 @@ atlas <- cellatlas_umap(P7_integrated,
                         dot_alpha = 1, 
                         label_size = 4, 
                         label_color = F 
-                        )
+)
 atlas
 
 oxygen_atlas <- cellatlas_umap(P7_integrated, 
@@ -165,7 +165,7 @@ marker = c('Gpihbp1', 'Kit', # gCap
            'Pecam1','Eng', 'Cd34', 'Cdh5', # General Endothelium
            'Col1a1', 'Col1a2', 'Col3a1', 'Fn1', 'Tagln', 'Acta2', 'Myl9','Myh11', # Mesenchyme
            'Tgfbi','Wnt5a' # Myofibroblast
-          )
+)
 
 P7_dotplot <- sce_dotplot(P7_integrated,
                           assay = 'SCT',
@@ -179,8 +179,8 @@ P7_dotplot <- sce_dotplot(P7_integrated,
                                      'Fibroblast',
                                      'Myfibroblast',
                                      'SMC'
-                                    ), 
-                          )
+                          ), 
+)
 
 P7_dotplot
 
@@ -192,7 +192,7 @@ marker1 = c('Adh5','Aldh3a2','Gapdh','Gpi1','Ldha','Pkm','Slc2a1', # Glycolysis
             'Acaa2','Acadm','Acads','Acadsb','Acadvl','Acox3','Echs1','Eci1','Eci2','Hadh','Hadha','Hadhb', # β-oxidation
             'Acsl1','Acsl4','Acaca','Degs1', # Fatty acid synthesis
             'Cyc1','Ndufs1','Ndufs2','Ndufs3','Sdha' # Oxidative phosphorylation
-            )
+)
 
 P7_Ec_dotplot <- sce_dotplot(subset(GSE151974_subset_P7_integrated1, idents = c('gCap','aCap','Art','Vein','EndoMT')),
                              assay = 'SCT',
@@ -201,7 +201,7 @@ P7_Ec_dotplot <- sce_dotplot(subset(GSE151974_subset_P7_integrated1, idents = c(
                              levels = c('Normoxia', 'Hyperoxia'),
                              title = 'Endothelium',
                              title_size = 10
-                             )
+)
 
 P7_EndoMT_dotplot <- sce_dotplot(subset(GSE151974_subset_P7_integrated1, idents = c('EndoMT')),
                                  assay = 'SCT',
@@ -210,7 +210,7 @@ P7_EndoMT_dotplot <- sce_dotplot(subset(GSE151974_subset_P7_integrated1, idents 
                                  levels = c('Normoxia', 'Hyperoxia'),
                                  title = 'EndoMT',
                                  title_size = 10
-                                 )
+)
 
 wrap_plots(P7_Ec_dotplot + P7_EndoMT_dotplot)
 
@@ -234,7 +234,7 @@ pseu1 <- pseudotime_umap(P7_integrated,
                          dot_size = 0.5, 
                          dot_alpha = 1, 
                          label_size = 4
-                        )
+)
 pseu1
 
 pseu2 <- pseudotime_umap(P7_integrated,
@@ -245,6 +245,51 @@ pseu2 <- pseudotime_umap(P7_integrated,
                          dot_size = 0.5, 
                          dot_alpha = 1, 
                          label_size = 4
-                        )
+)
 pseu2
 
+
+### GSEA analysis ###
+library(msigdbr)
+library(tibble)
+library(patchwork)
+
+c2_mmu <- msigdbr(species = "Mus musculus", category = c("C2")) %>% as.data.frame %>% dplyr::select(gs_name,entrez_gene,gene_symbol) %>% as.data.frame
+c5_mmu <- msigdbr(species = "Mus musculus", category = c("C5")) %>% as.data.frame %>% dplyr::select(gs_name,entrez_gene,gene_symbol) %>% as.data.frame
+
+c2_KEGG_mmu_pathway <- c2_mmu[grep(c('KEGG'), c2_mmu$gs_name),]
+c2_PID_mmu_pathway <- c2_mmu[grep(c('PID_'), c2_mmu$gs_name),]
+c2_BIOCARTA_mmu_pathway <- c2_mmu[grep(c('BIOCARTA'), c2_mmu$gs_name),]
+c2_REACTOME_mmu_pathway <- c2_mmu[grep(c('REACTOME'), c2_mmu$gs_name),]
+c2_WIKIPATHWAYS_mmu_pathway <- c2_mmu[grep(c('WIKIPATHWAYS'), c2_mmu$gs_name),]
+c5_GOBP_mmu_pathway <- c5_mmu[grep(c('GOBP'), c5_mmu$gs_name),]
+
+c2_KEGG_mmu_fgsea_sets <- c2_KEGG_mmu_pathway %>% split(x = .$gene_symbol, f = .$gs_name)
+c2_PID_mmu_fgsea_sets <- c2_PID_mmu_pathway %>% split(x = .$gene_symbol, f = .$gs_name)
+c2_BIOCARTA_mmu_fgsea_sets <- c2_BIOCARTA_mmu_pathway %>% split(x = .$gene_symbol, f = .$gs_name)
+c2_REACTOME_mmu_fgsea_sets <- c2_REACTOME_mmu_pathway %>% split(x = .$gene_symbol, f = .$gs_name)
+c2_WIKIPATHWAYS_mmu_fgsea_sets <- c2_WIKIPATHWAYS_mmu_pathway %>% split(x = .$gene_symbol, f = .$gs_name)
+c5_GOBP_mmu_fgsea_sets <- c5_GOBP_mmu_pathway %>% split(x = .$gene_symbol, f = .$gs_name)
+
+mmu_fgsea_sets <- c(c2_KEGG_mmu_fgsea_sets, 
+                    c2_PID_mmu_fgsea_sets,
+                    c2_BIOCARTA_mmu_fgsea_sets,
+                    c2_REACTOME_mmu_fgsea_sets,
+                    c2_WIKIPATHWAYS_mmu_fgsea_sets,
+                    c5_GOBP_mmu_fgsea_sets)
+
+source("./sce_GSEA.R")
+P7_integrated <- PrepSCTFindMarkers(P7_integrated)
+DEGs <- FindMarker_genes(dataset = P7_integrated, 
+                         clusters = c('gCap','aCap','Art','Vein','EndoMT','Fibroblast','SMC','Myofibroblast'),
+                         comparison = c("Oxygen", "Normoxia", "Hyperoxia"),
+                         logfc.threshold = 0,  
+                         min.cells.group = 1)  
+
+#write.csv(DEGs, file='P7_subset_DEGs_FindMarkers.csv', row.names = F)
+
+gsea_res <- my_GSEA(DEGs, pathway = mmu_fgsea_sets)
+
+gsea_res1 <- gsea_res
+gsea_res1 <- do.call(rbind, gsea_res1) %>% t()
+#write.csv(gsea_res1, file = "P7_MSigDB_C2CP_GSEA_results.csv", row.names = F)
