@@ -9,7 +9,9 @@ sce_dotplot <- function(object,
                         text_y_color = 'black', # The color of y-axis text (Default: 'black')
                         dot_color_low = '#0da9ce', # The lower color of dot (Default: '#0da9ce')
                         dot_color_mid = '#FFF6CA', # The middle color of dot (Default: '#FFF6CA')
-                        dot_color_high = '#e74a32' # The higher color of dot (Default: '#e74a32')
+                        dot_color_high = '#e74a32', # The higher color of dot (Default: '#e74a32')
+                        title = NULL, # The title of dotplot
+                        title_size = NULL # The size of title
                         ){
   
   suppressPackageStartupMessages({
@@ -39,9 +41,12 @@ sce_dotplot <- function(object,
                                         color = text_x_color),
              axis.text.y = element_text(size = text_y_size,
                                         color = text_y_color),
-       legend.position = 'right') + 
+             plot.title = element_text(size = title_size, 
+                                       hjust = 0.5),
+             legend.position = 'right') + 
        coord_flip()+
        xlab('') + 
-       ylab('')
+       ylab('') +
+       ggtitle(title)
   
 }
