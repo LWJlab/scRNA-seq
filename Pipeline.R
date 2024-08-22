@@ -68,7 +68,7 @@ p1 <- DimPlot(P7_integrated,
               reduction = "umap", 
               group.by = "seurat_clusters", 
               label = T)
-wrap_plots(p+p1) # Reference
+wrap_plots(p + p1) # Reference
 
 cluster_ids <- c("gCap",          #cluster 0
                  "Fibroblast",    #cluster 1
