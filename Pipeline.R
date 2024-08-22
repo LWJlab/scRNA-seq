@@ -3,7 +3,7 @@
 ###################################
 library(Seurat)
 library(SeuratObject)
-
+library(clustree)
 options(stringsAsFactors=FALSE)
 
 ### Data importing ###
@@ -22,8 +22,46 @@ P7_subset <- subset(subset, idents = c('P7_Hyperoxia', 'P7_Normoxia'))
 
 ### ProcessExper ###
 source('./processExper.R')
-GSE151974_subset_P7_integrated = processExper(P7_subset, 
-                                              org = 'mus',
-                                              cyclescoring = F,
-                                              sct.method = T,
-                                              reduction = 'cca')
+P7_integrated = processExper(P7_subset, 
+                             sct.method = T, 
+                             reduction = 'cca')
+
+### Cell clustering and dimensional reduction ###
+P7_integrated <- RunPCA(P7_integrated)
+dims = 1:40
+P7_integrated <- RunUMAP(P7_integrated,
+                         dims = dims,
+                         reduction.name = "umap") %>%
+                 FindNeighbors(dims = dims) %>%
+                 FindClusters(resolution = c(seq(0, 1, .1)))
+
+clustree(P7_integrated) # Select suitable resolution
+
+P7_integrated <- FindClusters(P7_integrated, resolution = 0.5)
+
+### Cell annotation ###
+cluster_ids <- c("gCap",          #cluster 0
+                 "Fibroblast",    #cluster 1
+                 "Fibroblast",    #cluster 2
+                 "aCap",          #cluster 3
+                 'Myofibroblast', #cluster 4
+                 'Myofibroblast', #cluster 5
+                 "Fibroblast",    #cluster 6
+                 'EndoMT',        #cluster 7
+                 "Fibroblast",    #cluster 8
+                 "Fibroblast",    #cluster 9
+                 "Vein",          #cluster 10
+                 "Art",           #cluster 11
+                 "SMC",           #cluster 12
+                 "Fibroblast",    #cluster 13
+                 "Myofibroblast", #cluster 14
+                 "Fibroblast"     #cluster 15
+                )
+
+names(cluster_ids) <- levels(P7_integrated)
+P7_integrated <- RenameIdents(P7_integrated, cluster_ids)
+P7_integrated$Celltype <- Idents(P7_integrated)
+
+
+
+GSE151974_subset_P7_integrated <- PrepSCTFindMarkers(GSE151974_subset_P7_integrated)
