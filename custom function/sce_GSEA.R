@@ -1,6 +1,6 @@
 sce_GSEA <- function(diff, 
-                    clusters = NULL, 
-                    pathway) {
+                     clusters = NULL, 
+                     pathway) {
 
   suppressPackageStartupMessages({
     library(msigdbr)
