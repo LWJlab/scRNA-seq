@@ -8,7 +8,7 @@ sce_GSEAbarplot <- function(object, # A dataframe containing Pathway1, Pathway2 
                             num_size = 2.5, # The size of number (Default: 2.5)
                             text_x_size = 10, # The size of x-axis text (Default: 10)
                             text_y_size = 10, # The size of y-axis text (Default: 10)
-                            xlim = c(0, 2.5) # A list of x-axis boundary
+                            xlim = c(-2.5, 2.5) # A list of x-axis boundary
 ){
   
   suppressPackageStartupMessages({
