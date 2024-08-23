@@ -223,7 +223,8 @@ P7_integrated1 <- as.SingleCellExperiment(P7_integrated, assay = 'SCT')
 sds <- slingshot(P7_integrated1, 
                  clusterLabels = "Celltype_main",
                  reducedDim = 'UMAP' ,
-                 start.clus = "Endothelium")
+                 start.clus = "Endothelium"
+                )
 
 source('./pseudotime_umap.R')
 pseu1 <- pseudotime_umap(P7_integrated,
@@ -276,7 +277,8 @@ mmu_fgsea_sets <- c(c2_KEGG_mmu_fgsea_sets,
                     c2_BIOCARTA_mmu_fgsea_sets,
                     c2_REACTOME_mmu_fgsea_sets,
                     c2_WIKIPATHWAYS_mmu_fgsea_sets,
-                    c5_GOBP_mmu_fgsea_sets)
+                    c5_GOBP_mmu_fgsea_sets
+                   )
 
 source("./sce_GSEA.R")
 P7_integrated <- PrepSCTFindMarkers(P7_integrated)
@@ -284,7 +286,8 @@ DEGs <- FindMarker_genes(dataset = P7_integrated,
                          clusters = c('gCap','aCap','Art','Vein','EndoMT','Fibroblast','SMC','Myofibroblast'),
                          comparison = c("Oxygen", "Normoxia", "Hyperoxia"),
                          logfc.threshold = 0,  
-                         min.cells.group = 1)  
+                         min.cells.group = 1
+                        )  
 
 #write.csv(DEGs, file = 'P7_subset_DEGs_FindMarkers.csv', row.names = F)
 
@@ -308,8 +311,7 @@ bar <- sce_GSEAbarplot(sigPathway,
                                       'p53 signaling pathway',
                                       'Interleukin-4 and interleukin-13 signaling'
                                      ),
-                       title = 'Hyperoxia vs. Normoxia (EndoMT)',
-                       group_color = 'grey10',
+                       category_color = 'grey10',
                        pathway_color = c("Carbohydrate metabolism" = "#66C2A5", 
                                          "Energy metabolism" = "#8DA0CB", 
                                          "Lipid metabolism" = "#A6D854", 
@@ -317,6 +319,7 @@ bar <- sce_GSEAbarplot(sigPathway,
                                          "Signaling molecules and interaction" = '#E5C494',
                                          "Cell growth and death" = '#FC8D62',
                                          "Immune system" = '#E78AC3'),
+                       title = 'Hyperoxia vs. Normoxia (EndoMT)',
                        title_size = rel(1),
                        num_size = 2.5,
                        text_x_size = rel(1),
