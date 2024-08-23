@@ -1,6 +1,6 @@
 sce_GSEA <- function(object, # A dataframe of DEGs in each cell cluster
-                     clusters = NULL, # 
-                     pathway
+                     clusters = NULL, # A list of preselected clusters
+                     pathway # MSigDB pathways
                     ){
 
   suppressPackageStartupMessages({
