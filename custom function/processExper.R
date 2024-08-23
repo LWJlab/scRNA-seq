@@ -1,6 +1,8 @@
-processExper <- function(object, 
-                         sct.method = F,
-                         reduction = "cca"){
+processExper <- function(object, # scobj
+                         sct.method = F, # glmGamPoi method activation or inactivation
+                         reduction = "cca" # Reduction includes cca, rpca and rlsi
+                        )
+{
   
   suppressPackageStartupMessages({
     library(Seurat)
