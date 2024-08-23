@@ -1,7 +1,7 @@
-FindMarker_genes <- function(object, 
-                             assay = NULL,
-                             clusters, 
-                             comparison,
+FindMarker_genes <- function(object, # scobj
+                             assay = NULL, # Name of assay to use, defaults to the active assay
+                             clusters, # A list of preselected clusters
+                             comparison, # Format: c('Condition', 'Control', 'Case')
                              ...) {
 
   suppressPackageStartupMessages({
