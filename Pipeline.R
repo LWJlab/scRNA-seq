@@ -299,8 +299,16 @@ gsea_res1 <- do.call(rbind, gsea_res1) %>% t()
 ### GSEA sigPathway visualization ###
 sigPathway <- read.csv("P7_EndoMT_Hyperoxia_vs_Normoxia_GSEA_sigPathway.csv", header = T)
 
+levels = c("Carbohydrate metabolism",
+           "Energy metabolism",
+           "Lipid metabolism",
+           "Signal transduction",
+           "Signaling molecules and interaction",
+           "Cell growth and death",
+           "Immune system"
+          )
 bar <- sce_GSEAbarplot(sigPathway, 
-                       levels = ft[1:7], # A list in a specific order
+                       levels = levels[1:7], 
                        maxPathway = c('Carbohydrate catabolic process',
                                       'ADP metabolic process',
                                       'Membrane lipid metabolic process',
