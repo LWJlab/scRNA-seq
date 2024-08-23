@@ -86,7 +86,7 @@ cluster_ids <- c("gCap",          #cluster 0
                  "Fibroblast",    #cluster 13
                  "Myofibroblast", #cluster 14
                  "Fibroblast"     #cluster 15
-)
+                )
 
 names(cluster_ids) <- levels(P7_integrated)
 P7_integrated <- RenameIdents(P7_integrated, cluster_ids)
@@ -109,7 +109,7 @@ cluster_ids1 <- c("Endothelium",   #cluster 0
                   "Fibroblast",    #cluster 13
                   "Myofibroblast", #cluster 14
                   "Fibroblast"     #cluster 15
-)
+                 )
 
 names(cluster_ids1) <- levels(P7_integrated)
 P7_integrated <- RenameIdents(P7_integrated, cluster_ids1)
@@ -136,8 +136,8 @@ atlas <- cellatlas_umap(P7_integrated,
                         dot_size = 0.5,
                         dot_alpha = 1, 
                         label_size = 4, 
-                        label_color = F 
-)
+                        label_color = F
+                       )
 atlas
 
 oxygen_atlas <- cellatlas_umap(P7_integrated, 
@@ -151,8 +151,8 @@ oxygen_atlas <- cellatlas_umap(P7_integrated,
                                dot_size = 0.5, 
                                dot_alpha = 1, 
                                label_size = 4, 
-                               label_color = T 
-)
+                               label_color = T
+                              )
 oxygen_atlas
 
 
@@ -165,7 +165,7 @@ marker = c('Gpihbp1', 'Kit', # gCap
            'Pecam1','Eng', 'Cd34', 'Cdh5', # General Endothelium
            'Col1a1', 'Col1a2', 'Col3a1', 'Fn1', 'Tagln', 'Acta2', 'Myl9','Myh11', # Mesenchyme
            'Tgfbi','Wnt5a' # Myofibroblast
-)
+          )
 
 P7_dotplot <- sce_dotplot(P7_integrated,
                           assay = 'SCT',
@@ -179,8 +179,8 @@ P7_dotplot <- sce_dotplot(P7_integrated,
                                      'Fibroblast',
                                      'Myfibroblast',
                                      'SMC'
-                          ), 
-)
+                                    ), 
+                         )
 
 P7_dotplot
 
@@ -192,7 +192,7 @@ marker1 = c('Adh5','Aldh3a2','Gapdh','Gpi1','Ldha','Pkm','Slc2a1', # Glycolysis
             'Acaa2','Acadm','Acads','Acadsb','Acadvl','Acox3','Echs1','Eci1','Eci2','Hadh','Hadha','Hadhb', # β-oxidation
             'Acsl1','Acsl4','Acaca','Degs1', # Fatty acid synthesis
             'Cyc1','Ndufs1','Ndufs2','Ndufs3','Sdha' # Oxidative phosphorylation
-)
+           )
 
 P7_Ec_dotplot <- sce_dotplot(subset(GSE151974_subset_P7_integrated1, idents = c('gCap','aCap','Art','Vein','EndoMT')),
                              assay = 'SCT',
@@ -201,7 +201,7 @@ P7_Ec_dotplot <- sce_dotplot(subset(GSE151974_subset_P7_integrated1, idents = c(
                              levels = c('Normoxia', 'Hyperoxia'),
                              title = 'Endothelium',
                              title_size = 10
-)
+                            )
 
 P7_EndoMT_dotplot <- sce_dotplot(subset(GSE151974_subset_P7_integrated1, idents = c('EndoMT')),
                                  assay = 'SCT',
@@ -210,7 +210,7 @@ P7_EndoMT_dotplot <- sce_dotplot(subset(GSE151974_subset_P7_integrated1, idents 
                                  levels = c('Normoxia', 'Hyperoxia'),
                                  title = 'EndoMT',
                                  title_size = 10
-)
+                                )
 
 wrap_plots(P7_Ec_dotplot + P7_EndoMT_dotplot)
 
@@ -234,7 +234,7 @@ pseu1 <- pseudotime_umap(P7_integrated,
                          dot_size = 0.5, 
                          dot_alpha = 1, 
                          label_size = 4
-)
+                        )
 pseu1
 
 pseu2 <- pseudotime_umap(P7_integrated,
@@ -245,7 +245,7 @@ pseu2 <- pseudotime_umap(P7_integrated,
                          dot_size = 0.5, 
                          dot_alpha = 1, 
                          label_size = 4
-)
+                        )
 pseu2
 
 
@@ -286,7 +286,7 @@ DEGs <- FindMarker_genes(dataset = P7_integrated,
                          logfc.threshold = 0,  
                          min.cells.group = 1)  
 
-#write.csv(DEGs, file='P7_subset_DEGs_FindMarkers.csv', row.names = F)
+#write.csv(DEGs, file = 'P7_subset_DEGs_FindMarkers.csv', row.names = F)
 
 gsea_res <- my_GSEA(DEGs, pathway = mmu_fgsea_sets)
 
