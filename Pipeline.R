@@ -280,7 +280,7 @@ mmu_fgsea_sets <- c(c2_KEGG_mmu_fgsea_sets,
                     c5_GOBP_mmu_fgsea_sets
                    )
 
-source("./sce_GSEA.R")
+source("./FindMarker_genes.R")
 P7_integrated <- PrepSCTFindMarkers(P7_integrated)
 DEGs <- FindMarker_genes(dataset = P7_integrated, 
                          assay = 'SCT',
@@ -290,6 +290,7 @@ DEGs <- FindMarker_genes(dataset = P7_integrated,
                          min.cells.group = 1
                         )  
 
+source("./sce_GSEA.R")
 gsea_res <- sce_GSEA(DEGs, pathway = mmu_fgsea_sets)
 
 gsea_res1 <- gsea_res
@@ -298,6 +299,7 @@ gsea_res1 <- do.call(rbind, gsea_res1) %>% t()
 
 
 ### GSEA sigPathway visualization ###
+source("./sce_GSEAbarplot.R")
 sigPathway <- read.csv("P7_EndoMT_Hyperoxia_vs_Normoxia_GSEA_sigPathway.csv", header = T)
 
 levels = c("Carbohydrate metabolism",
