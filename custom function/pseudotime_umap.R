@@ -10,6 +10,8 @@ pseudotime_umap <- function(object, # scobj
   
   suppressPackageStartupMessages({
     library(Seurat)
+    library(tidyverse)
+    library(dplyr)
     library(ggplot2)})
   
   pseudotime_obj@colData %>% colnames() %>% grep(pattern = "^sling", x = ., value = TRUE) -> slingshot_res_colnames
