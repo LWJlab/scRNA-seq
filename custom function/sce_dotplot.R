@@ -1,4 +1,4 @@
-sce_dotplot <- function(object,
+sce_dotplot <- function(object, # scobj
                         assay = NULL, # Name of assay to use, defaults to the active assay
                         idents = NULL, # The column in the metadata of scobj
                         markers = NULL, # A list of genes
