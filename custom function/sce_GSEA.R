@@ -1,4 +1,4 @@
-sce_GSEA <- function(diff, 
+sce_GSEA <- function(object, 
                      clusters = NULL, 
                      pathway) {
 
@@ -14,13 +14,13 @@ sce_GSEA <- function(diff,
          call. = FALSE)
   }
   
-  if (is.null(clusters)) clusters <- unique(diff$cluster)
+  if (is.null(clusters)) clusters <- unique(object$cluster)
   
   gsea_res <- list()
   
   for (i in seq(length(clusters))) {
     
-    data <- diff %>%
+    data <- object %>%
             dplyr::filter(.data$cluster == clusters[i]) %>%
             arrange(desc(.data$avg_log2FC))
     
