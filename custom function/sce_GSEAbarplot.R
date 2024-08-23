@@ -469,8 +469,8 @@ sce_GSEAbarplot <- function(object, # A dataframe containing Pathway1, Pathway2 
     geom_text(aes(label = Label), 
               color = 'black',
               size = num_size,
-              hjust = "left",
-              nudge_x = 0.1) + 
+              hjust = 0.5,
+              nudge_x = 0) + 
     scale_x_continuous(limits = xlim,
                        expand = expansion(mult = c(0, .1))) + 
     labs(x = "NES", y = "", title = title) +
@@ -498,8 +498,8 @@ sce_GSEAbarplot <- function(object, # A dataframe containing Pathway1, Pathway2 
           legend.position = "none",
           plot.margin = unit(x = c(top.mar = 0.2,
                                    right.mar = 0.2,
-                                   left.mar=0.2,
-                                   bottom.mar= 0.2),
+                                   left.mar = 0.2,
+                                   bottom.mar = 0.2),
                              units = 'inches'))
   
   barplot1 <- barplot + theme
