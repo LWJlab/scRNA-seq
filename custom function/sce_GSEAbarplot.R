@@ -469,8 +469,8 @@ sce_GSEAbarplot <- function(object, # A dataframe containing Pathway1, Pathway2 
     geom_text(aes(label = Label), 
               color = 'black',
               size = num_size,
-              hjust = 0.5,
-              nudge_x = 0) + 
+              hjust = 'left',
+              nudge_x = 0.1) + 
     scale_x_continuous(limits = xlim,
                        expand = expansion(mult = c(0, 0))) + 
     labs(x = "NES", y = "", title = title) +
