@@ -36,8 +36,8 @@ dims = 1:40
 P7_integrated <- RunUMAP(P7_integrated,
                          dims = dims,
                          reduction.name = "umap") %>%
-  FindNeighbors(dims = dims) %>%
-  FindClusters(resolution = c(seq(0, 1, .1)))
+                 FindNeighbors(dims = dims) %>%
+                 FindClusters(resolution = c(seq(0, 1, .1)))
 
 clustree(P7_integrated) # Select suitable resolution
 
@@ -47,7 +47,7 @@ P7_integrated <- FindClusters(P7_integrated, resolution = 0.5)
 ### Cell annotation ###
 p <- DotPlot(P7_integrated, 
              assay = 'SCT',
-             group.by = 'Celltype',
+             group.by = 'seurat_clusters',
              features = c('Gpihbp1', 'Kit', # gCap
                           'Car4', 'Kdr', # aCap
                           'Cxcl12', 'Pcsk5', # Art
@@ -55,12 +55,12 @@ p <- DotPlot(P7_integrated,
                           'Pecam1', 'Eng', 'Cd34', 'Cdh5', # Gen ECs
                           'Col1a1', 'Col1a2', 'Col3a1', 'Fn1', 'Tagln', 'Acta2', 'Myl9', 'Myh11', # Mesenchyme
                           'Tgfbi','Wnt5a' #Myofibroblast
-             ) 
-) +
-  theme(axis.title =element_blank(),
+                          ) 
+             ) +
+  theme(axis.title = element_blank(),
         axis.line = element_blank(),
-        axis.ticks.x =element_blank(),
-        axis.text.x = element_text(size=10),
+        axis.ticks.x = element_blank(),
+        axis.text.x = element_text(size = 10),
         panel.background = element_rect(color = 'black'))+
   coord_flip()
 
