@@ -295,12 +295,12 @@ gsea_res <- sce_GSEA(DEGs, pathway = mmu_fgsea_sets)
 
 gsea_res1 <- gsea_res
 gsea_res1 <- do.call(rbind, gsea_res1) %>% t()
-#write.csv(gsea_res1, file = "P7_MSigDB_C2CP_GSEA_results.csv", row.names = F)
+#write.csv(gsea_res1, file = "./P7_MSigDB_C2CP_GSEA_results.csv", row.names = F)
 
 
 ### GSEA sigPathway visualization ###
 source("./sce_GSEAbarplot.R")
-sigPathway <- read.csv("P7_EndoMT_Hyperoxia_vs_Normoxia_GSEA_sigPathway.csv", header = T)
+sigPathway <- read.csv("./P7_EndoMT_Hyperoxia_vs_Normoxia_GSEA_sigPathway.csv", header = T)
 
 levels = c("Carbohydrate metabolism",
            "Energy metabolism",
