@@ -21,8 +21,8 @@ sce_GSEA <- function(diff,
   for (i in seq(length(clusters))) {
     
     data <- diff %>%
-      dplyr::filter(.data$cluster == clusters[i]) %>%
-      arrange(desc(.data$avg_log2FC))
+            dplyr::filter(.data$cluster == clusters[i]) %>%
+            arrange(desc(.data$avg_log2FC))
     
     l <- data$avg_log2FC
     names(l) <- data$gene
