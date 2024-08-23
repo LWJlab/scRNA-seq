@@ -1,15 +1,15 @@
 sce_GSEAbarplot <- function(object, # A dataframe containing Pathway1, Pathway2 and NES columns
                             levels = NULL, # A list that is arranged according to the order of Pathway1
                             maxPathway = NULL, # A list of the pathways with the highest NES values in each category within Pathway2.
-                            category_color = 'grey10', # The color codes for category of pathways
+                            category_color = 'grey10', # The color codes for category of pathways (Default: 'grey10')
                             pathway_color = NULL, # A list of pathways and their corresponding color codes
                             title = NULL, # The title of dotplot
-                            title_size = NULL, # The size of title
-                            num_size = NULL, # The size of number
+                            title_size = 10, # The size of title (Default: 10)
+                            num_size = 2.5, # The size of number (Default: 2.5)
                             text_x_size = 10, # The size of x-axis text (Default: 10)
                             text_y_size = 10, # The size of y-axis text (Default: 10)
                             xlim = c(0, 2.5) # A list of x-axis boundary
-                           ){
+){
   
   suppressPackageStartupMessages({
     library(tidyverse)
@@ -35,9 +35,9 @@ sce_GSEAbarplot <- function(object, # A dataframe containing Pathway1, Pathway2 
   
   # Set levels
   df$Pathway2 <- df$Pathway2 %>% factor() %>% fct_inorder() %>% fct_rev()
-
+  
   maxPathway <- maxPathway
-
+  
   if(length(levels) == 1){
     raw_row_names <- df$Pathway1
     raw_row <- levels[1]
@@ -54,13 +54,13 @@ sce_GSEAbarplot <- function(object, # A dataframe containing Pathway1, Pathway2 
     row2 <- df %>% slice(row_indices2)
     
     df1 <- df %>%
-           slice(-1:-length(row_names)) %>%
-           bind_rows(row1)  %>%  
-           bind_rows(row2)  %>% 
-           bind_rows(df %>% slice(1:length(row_names)) %>% slice(-row_indices1, -row_indices2))
+      slice(-1:-length(row_names)) %>%
+      bind_rows(row1)  %>%  
+      bind_rows(row2)  %>% 
+      bind_rows(df %>% slice(1:length(row_names)) %>% slice(-row_indices1, -row_indices2))
     
     df <- df1
-    }
+  }
   
   if(length(levels) == 2){
     raw_row_names <- df$Pathway1
@@ -78,14 +78,14 @@ sce_GSEAbarplot <- function(object, # A dataframe containing Pathway1, Pathway2 
     row2 <- df %>% slice(row_indices2)
     
     df1 <- df %>%
-           slice(-1:-length(row_names)) %>%
-           bind_rows(row1)  %>%  
-           bind_rows(row2)  %>% 
-           bind_rows(df %>% slice(1:length(row_names)) %>% slice(-row_indices1, -row_indices2))
+      slice(-1:-length(row_names)) %>%
+      bind_rows(row1)  %>%  
+      bind_rows(row2)  %>% 
+      bind_rows(df %>% slice(1:length(row_names)) %>% slice(-row_indices1, -row_indices2))
     
     row_indices3 <- which(row_names %in% levels[2])
     row_indices4 <- which(row_names %in% maxPathway[2])
- 
+    
     row3 <- df %>% slice(row_indices3)
     row4 <- df %>% slice(row_indices4)
     
@@ -96,7 +96,7 @@ sce_GSEAbarplot <- function(object, # A dataframe containing Pathway1, Pathway2 
       bind_rows(df %>% slice(1:length(row_names)) %>% slice(-row_indices3, -row_indices4) %>% slice(-1:-(row_indices4-1)))
     
     df <- df2
-    } 
+  } 
   
   if(length(levels) == 3){
     raw_row_names <- df$Pathway1
@@ -465,42 +465,42 @@ sce_GSEAbarplot <- function(object, # A dataframe containing Pathway1, Pathway2 
   df$Pathway2 <- fct_inorder(df$Pathway2) %>% fct_rev()
   
   barplot <- ggplot(df, aes(x = NES, y = Pathway2, fill = Pathway1))+
-             geom_col()+ 
-             geom_text(aes(label = Label), 
-                       color = 'black',
-                       size = num_size,
-                       hjust = "left",
-                       nudge_x = 0.1) + 
-             scale_x_continuous(limits = xlim,
-                                expand = expansion(mult = c(0, .1))) + 
-             labs(x = "NES", y = "", title = title) +
-             scale_fill_manual(values = pathway_color)
+    geom_col()+ 
+    geom_text(aes(label = Label), 
+              color = 'black',
+              size = num_size,
+              hjust = "left",
+              nudge_x = 0.1) + 
+    scale_x_continuous(limits = xlim,
+                       expand = expansion(mult = c(0, .1))) + 
+    labs(x = "NES", y = "", title = title) +
+    scale_fill_manual(values = pathway_color)
   
   g <- ggplot_build(barplot)
   mycol <- g$data[[1]]["fill"]
   col <- rev(mycol$fill)
-
+  
   num <- rev(df$NES)
   index <- which(num == 0)
   col[index] <- category_color
   
-
+  
   theme <-  theme_bw()+
-            theme(plot.title = element_text(size = rel(1),
-                                            hjust = 0.5,
-                                            face = 'plain'),
-                  axis.title = element_text(size = rel(1)),
-                  axis.text.x = element_text(size = text_x_size,
-                                             color = 'black'),
-                  axis.text.y = element_text(size = text_y_size,
-                                             color = col,
-                                             face = 'bold'),
-                  legend.position = "none",
-                  plot.margin = unit(x = c(top.mar = 0.2,
-                                           right.mar = 0.2,
-                                           left.mar=0.2,
-                                           bottom.mar= 0.2),
-                                     units = 'inches'))
+    theme(plot.title = element_text(size = rel(1),
+                                    hjust = 0.5,
+                                    face = 'plain'),
+          axis.title = element_text(size = rel(1)),
+          axis.text.x = element_text(size = text_x_size,
+                                     color = 'black'),
+          axis.text.y = element_text(size = text_y_size,
+                                     color = col,
+                                     face = 'bold'),
+          legend.position = "none",
+          plot.margin = unit(x = c(top.mar = 0.2,
+                                   right.mar = 0.2,
+                                   left.mar=0.2,
+                                   bottom.mar= 0.2),
+                             units = 'inches'))
   
   barplot1 <- barplot + theme
 }
