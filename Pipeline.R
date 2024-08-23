@@ -179,7 +179,7 @@ P7_dotplot <- sce_dotplot(P7_integrated,
                                      'Fibroblast',
                                      'Myfibroblast',
                                      'SMC'
-                                    ), 
+                                    ) 
                          )
 
 P7_dotplot
@@ -201,8 +201,7 @@ P7_Ec_dotplot <- sce_dotplot(subset(GSE151974_subset_P7_integrated1, idents = c(
                              markers = marker1,
                              levels = c('Normoxia', 'Hyperoxia'),
                              title = 'Endothelium',
-                             title_size = 10,
-                             dot_legend = 'Mean expression (scaled)'
+                             title_size = 10
                             )
 
 P7_EndoMT_dotplot <- sce_dotplot(subset(GSE151974_subset_P7_integrated1, idents = c('EndoMT')),
@@ -211,8 +210,7 @@ P7_EndoMT_dotplot <- sce_dotplot(subset(GSE151974_subset_P7_integrated1, idents 
                                  markers = marker1,
                                  levels = c('Normoxia', 'Hyperoxia'),
                                  title = 'EndoMT',
-                                 title_size = 10,
-                                 dot_legend = 'Mean expression (scaled)'
+                                 title_size = 10
                                 )
 
 wrap_plots(P7_Ec_dotplot + P7_EndoMT_dotplot)
