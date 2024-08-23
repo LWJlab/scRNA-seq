@@ -1,6 +1,7 @@
-sce_GSEA <- function(object, 
-                     clusters = NULL, 
-                     pathway) {
+sce_GSEA <- function(object, # A dataframe of DEGs in each cell cluster
+                     clusters = NULL, # 
+                     pathway
+                    ){
 
   suppressPackageStartupMessages({
     library(msigdbr)
