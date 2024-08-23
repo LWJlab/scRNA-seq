@@ -7,7 +7,6 @@ sce_dotplot <- function(object, # scobj
                         text_y_size = 10, # The size of y-axis text (Default: 10)
                         text_x_color = 'black', # The color of x-axis text (Default: 'black')
                         text_y_color = 'black', # The color of y-axis text (Default: 'black')
-                        dot_legend = NULL, # The legend name of dot
                         dot_color_low = '#0da9ce', # The lower color of dot (Default: '#0da9ce')
                         dot_color_mid = '#FFF6CA', # The middle color of dot (Default: '#FFF6CA')
                         dot_color_high = '#e74a32', # The higher color of dot (Default: '#e74a32')
@@ -34,7 +33,7 @@ sce_dotplot <- function(object, # scobj
        scale_color_gradient2(low = dot_color_low, 
                              mid = dot_color_mid, 
                              high = dot_color_high,
-                             name = dot_legend)+
+                             name = 'Mean expression')+
        theme(axis.text.x = element_text(vjust = 1,
                                         hjust = 1,
                                         angle = 45,
