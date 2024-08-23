@@ -3,9 +3,11 @@ sce_GSEA <- function(diff,
                     pathway) {
 
   suppressPackageStartupMessages({
+    library(msigdbr)
+    library(fgsea)
+    library(tibble)
     library(tidyverse)
-    library(dplyr)
-    library(ggplot2)})
+    library(dplyr)})
 
   if (!requireNamespace("fgsea", quietly = TRUE)) {
     stop(paste("Package \"fgsea\" needed for this function to work. Please install it."),
@@ -32,8 +34,8 @@ sce_GSEA <- function(diff,
                         nperm = 10000)
     
     res <- res %>%
-      add_column(cluster = clusters[i],
-                 .before = 1)
+           add_column(cluster = clusters[i],
+                      .before = 1)
     
     gsea_res[[i]] <- res
   }
