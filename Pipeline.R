@@ -5,7 +5,7 @@ library(Seurat)
 library(SeuratObject)
 library(clustree)
 library(patchwork)
-options(stringsAsFactors=FALSE)
+options(stringsAsFactors = FALSE)
 
 ### Data importing ###
 raw_count <- read.csv('GSE151974_raw_umi_matrix_postfilter.csv', row.names = 1) # https://ftp.ncbi.nlm.nih.gov/geo/series/GSE151nnn/GSE151974/suppl/GSE151974%5Fcell%5Fmetadata%5Fpostfilter.csv.gz
