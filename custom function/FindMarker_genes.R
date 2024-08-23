@@ -5,9 +5,6 @@ FindMarker_genes <- function(dataset,
 
   suppressPackageStartupMessages({
     library(Seurat)
-    library(msigdbr)
-    library(fgsea)
-    library(tibble)
     library(tidyverse)
     library(dplyr)})
 
