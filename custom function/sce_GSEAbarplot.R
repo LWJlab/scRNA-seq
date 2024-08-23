@@ -91,7 +91,7 @@ sce_GSEAbarplot <- function(object, # A dataframe containing Pathway1, Pathway2 
     
     df2 <- df1 %>%
       slice(-row_indices4:-length(row_names)) %>%
-      bind_rows(row3)  %>%  # 先添加第 5 行，再添加第 3 行
+      bind_rows(row3)  %>%  
       bind_rows(row4) %>%
       bind_rows(df %>% slice(1:length(row_names)) %>% slice(-row_indices3, -row_indices4) %>% slice(-1:-(row_indices4-1)))
     
@@ -127,7 +127,7 @@ sce_GSEAbarplot <- function(object, # A dataframe containing Pathway1, Pathway2 
     
     df2 <- df1 %>%
       slice(-row_indices4:-length(row_names)) %>%
-      bind_rows(row3)  %>%  # 先添加第 5 行，再添加第 3 行
+      bind_rows(row3)  %>%  
       bind_rows(row4) %>%
       bind_rows(df %>% slice(1:length(row_names)) %>% slice(-row_indices3, -row_indices4) %>% slice(-1:-(row_indices4-1)))
     
@@ -139,7 +139,7 @@ sce_GSEAbarplot <- function(object, # A dataframe containing Pathway1, Pathway2 
     
     df3 <- df2 %>%
       slice(-row_indices6:-length(row_names)) %>%
-      bind_rows(row5)  %>%  # 先添加第 5 行，再添加第 3 行
+      bind_rows(row5)  %>%  
       bind_rows(row6) %>%
       bind_rows(df %>% slice(1:length(row_names)) %>% slice(-row_indices5, -row_indices6) %>% slice(-1:-(row_indices6-1)))
     
@@ -176,7 +176,7 @@ sce_GSEAbarplot <- function(object, # A dataframe containing Pathway1, Pathway2 
     
     df2 <- df1 %>%
       slice(-row_indices4:-length(row_names)) %>%
-      bind_rows(row3)  %>%  # 先添加第 5 行，再添加第 3 行
+      bind_rows(row3)  %>%  
       bind_rows(row4) %>%
       bind_rows(df %>% slice(1:length(row_names)) %>% slice(-row_indices3, -row_indices4) %>% slice(-1:-(row_indices4-1)))
     
@@ -188,7 +188,7 @@ sce_GSEAbarplot <- function(object, # A dataframe containing Pathway1, Pathway2 
     
     df3 <- df2 %>%
       slice(-row_indices6:-length(row_names)) %>%
-      bind_rows(row5)  %>%  # 先添加第 5 行，再添加第 3 行
+      bind_rows(row5)  %>%  
       bind_rows(row6) %>%
       bind_rows(df %>% slice(1:length(row_names)) %>% slice(-row_indices5, -row_indices6) %>% slice(-1:-(row_indices6-1)))
     
@@ -200,7 +200,7 @@ sce_GSEAbarplot <- function(object, # A dataframe containing Pathway1, Pathway2 
     
     df4 <- df3 %>%
       slice(-row_indices8:-length(row_names)) %>%
-      bind_rows(row7)  %>%  # 先添加第 5 行，再添加第 3 行
+      bind_rows(row7)  %>%  
       bind_rows(row8) %>%
       bind_rows(df %>% slice(1:length(row_names)) %>% slice(-row_indices7, -row_indices8) %>% slice(-1:-(row_indices8-1)))
     
@@ -237,7 +237,7 @@ sce_GSEAbarplot <- function(object, # A dataframe containing Pathway1, Pathway2 
     
     df2 <- df1 %>%
       slice(-row_indices4:-length(row_names)) %>%
-      bind_rows(row3)  %>%  # 先添加第 5 行，再添加第 3 行
+      bind_rows(row3)  %>%  
       bind_rows(row4) %>%
       bind_rows(df %>% slice(1:length(row_names)) %>% slice(-row_indices3, -row_indices4) %>% slice(-1:-(row_indices4-1)))
     
@@ -249,7 +249,7 @@ sce_GSEAbarplot <- function(object, # A dataframe containing Pathway1, Pathway2 
     
     df3 <- df2 %>%
       slice(-row_indices6:-length(row_names)) %>%
-      bind_rows(row5)  %>%  # 先添加第 5 行，再添加第 3 行
+      bind_rows(row5)  %>%  
       bind_rows(row6) %>%
       bind_rows(df %>% slice(1:length(row_names)) %>% slice(-row_indices5, -row_indices6) %>% slice(-1:-(row_indices6-1)))
     
@@ -261,7 +261,7 @@ sce_GSEAbarplot <- function(object, # A dataframe containing Pathway1, Pathway2 
     
     df4 <- df3 %>%
       slice(-row_indices8:-length(row_names)) %>%
-      bind_rows(row7)  %>%  # 先添加第 5 行，再添加第 3 行
+      bind_rows(row7)  %>%  
       bind_rows(row8) %>%
       bind_rows(df %>% slice(1:length(row_names)) %>% slice(-row_indices7, -row_indices8) %>% slice(-1:-(row_indices8-1)))
     
@@ -273,7 +273,7 @@ sce_GSEAbarplot <- function(object, # A dataframe containing Pathway1, Pathway2 
     
     df5 <- df4 %>%
       slice(-row_indices10:-length(row_names)) %>%
-      bind_rows(row9)  %>%  # 先添加第 5 行，再添加第 3 行
+      bind_rows(row9)  %>%  
       bind_rows(row10) %>%
       bind_rows(df %>% slice(1:length(row_names)) %>% slice(-row_indices9, -row_indices10) %>% slice(-1:-(row_indices10-1)))
     
@@ -310,7 +310,7 @@ sce_GSEAbarplot <- function(object, # A dataframe containing Pathway1, Pathway2 
     
     df2 <- df1 %>%
       slice(-row_indices4:-length(row_names)) %>%
-      bind_rows(row3)  %>%  # 先添加第 5 行，再添加第 3 行
+      bind_rows(row3)  %>%  
       bind_rows(row4) %>%
       bind_rows(df %>% slice(1:length(row_names)) %>% slice(-row_indices3, -row_indices4) %>% slice(-1:-(row_indices4-1)))
     
@@ -322,7 +322,7 @@ sce_GSEAbarplot <- function(object, # A dataframe containing Pathway1, Pathway2 
     
     df3 <- df2 %>%
       slice(-row_indices6:-length(row_names)) %>%
-      bind_rows(row5)  %>%  # 先添加第 5 行，再添加第 3 行
+      bind_rows(row5)  %>% 
       bind_rows(row6) %>%
       bind_rows(df %>% slice(1:length(row_names)) %>% slice(-row_indices5, -row_indices6) %>% slice(-1:-(row_indices6-1)))
     
@@ -334,7 +334,7 @@ sce_GSEAbarplot <- function(object, # A dataframe containing Pathway1, Pathway2 
     
     df4 <- df3 %>%
       slice(-row_indices8:-length(row_names)) %>%
-      bind_rows(row7)  %>%  # 先添加第 5 行，再添加第 3 行
+      bind_rows(row7)  %>%  
       bind_rows(row8) %>%
       bind_rows(df %>% slice(1:length(row_names)) %>% slice(-row_indices7, -row_indices8) %>% slice(-1:-(row_indices8-1)))
     
@@ -346,7 +346,7 @@ sce_GSEAbarplot <- function(object, # A dataframe containing Pathway1, Pathway2 
     
     df5 <- df4 %>%
       slice(-row_indices10:-length(row_names)) %>%
-      bind_rows(row9)  %>%  # 先添加第 5 行，再添加第 3 行
+      bind_rows(row9)  %>%  
       bind_rows(row10) %>%
       bind_rows(df %>% slice(1:length(row_names)) %>% slice(-row_indices9, -row_indices10) %>% slice(-1:-(row_indices10-1)))
     
