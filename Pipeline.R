@@ -283,6 +283,7 @@ mmu_fgsea_sets <- c(c2_KEGG_mmu_fgsea_sets,
 source("./sce_GSEA.R")
 P7_integrated <- PrepSCTFindMarkers(P7_integrated)
 DEGs <- FindMarker_genes(dataset = P7_integrated, 
+                         assay = 'SCT',
                          clusters = c('gCap','aCap','Art','Vein','EndoMT','Fibroblast','SMC','Myofibroblast'),
                          comparison = c("Oxygen", "Normoxia", "Hyperoxia"),
                          logfc.threshold = 0,  
