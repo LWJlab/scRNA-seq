@@ -289,7 +289,7 @@ DEGs <- FindMarker_genes(dataset = P7_integrated,
                          min.cells.group = 1
                         )  
 
-gsea_res <- my_GSEA(DEGs, pathway = mmu_fgsea_sets)
+gsea_res <- sce_GSEA(DEGs, pathway = mmu_fgsea_sets)
 
 gsea_res1 <- gsea_res
 gsea_res1 <- do.call(rbind, gsea_res1) %>% t()
