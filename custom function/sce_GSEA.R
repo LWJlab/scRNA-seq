@@ -1,7 +1,12 @@
 sce_GSEA <- function(diff, 
                     clusters = NULL, 
                     pathway) {
-  library(tidyverse)
+
+  suppressPackageStartupMessages({
+    library(tidyverse)
+    library(dplyr)
+    library(ggplot2)})
+
   if (!requireNamespace("fgsea", quietly = TRUE)) {
     stop(paste("Package \"fgsea\" needed for this function to work. Please install it."),
          call. = FALSE)
