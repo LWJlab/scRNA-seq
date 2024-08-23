@@ -289,8 +289,6 @@ DEGs <- FindMarker_genes(dataset = P7_integrated,
                          min.cells.group = 1
                         )  
 
-#write.csv(DEGs, file = 'P7_subset_DEGs_FindMarkers.csv', row.names = F)
-
 gsea_res <- my_GSEA(DEGs, pathway = mmu_fgsea_sets)
 
 gsea_res1 <- gsea_res
