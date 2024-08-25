@@ -187,6 +187,8 @@ P7_dotplot
 
 ### Dotplot of metabolism-related genes ###
 marker1 = c('Adh5', 'Aldh3a2', 'Gapdh', 'Gpi1', 'Ldha', 'Pkm', 'Slc2a1', # Glycolysis
+            'G6pdx', 'Pgd', 'Taldo1', 'Tkt', # Pentose phosphate pathway
+            'Dhfr', 'Mthfd1', 'Mthfd2', 'Shmt1', 'Shmt2', 'Slc25a32', # One carbon metabolism
             'Acat1', 'Aldh7a1', 'Gcdh',  # Amino acid metabolism
             'Cpt1a', 'Cpt1c', 'Cpt2', # Carnitine shuttle
             'Acaa2', 'Acadm', 'Acads', 'Acadsb', 'Acadvl', 'Acox3', 'Echs1', 'Eci1', 'Eci2', 'Hadh', 'Hadha','Hadhb', # β-oxidation
