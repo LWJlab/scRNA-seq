@@ -36,8 +36,8 @@ dims = 1:40
 P7_integrated <- RunUMAP(P7_integrated,
                          dims = dims,
                          reduction.name = "umap") %>%
-                 FindNeighbors(dims = dims) %>%
-                 FindClusters(resolution = c(seq(0, 1, .1)))
+  FindNeighbors(dims = dims) %>%
+  FindClusters(resolution = c(seq(0, 1, .1)))
 
 clustree(P7_integrated) # Select suitable resolution
 
@@ -55,8 +55,8 @@ p <- DotPlot(P7_integrated,
                           'Pecam1', 'Eng', 'Cd34', 'Cdh5', # Gen ECs
                           'Col1a1', 'Col1a2', 'Col3a1', 'Fn1', 'Tagln', 'Acta2', 'Myl9', 'Myh11', # Mesenchyme
                           'Tgfbi','Wnt5a' #Myofibroblast
-                          ) 
-             ) +
+             ) 
+) +
   theme(axis.title = element_blank(),
         axis.line = element_blank(),
         axis.ticks.x = element_blank(),
@@ -86,7 +86,7 @@ cluster_ids <- c("gCap",          #cluster 0
                  "Fibroblast",    #cluster 13
                  "Myofibroblast", #cluster 14
                  "Fibroblast"     #cluster 15
-                )
+)
 
 names(cluster_ids) <- levels(P7_integrated)
 P7_integrated <- RenameIdents(P7_integrated, cluster_ids)
@@ -109,7 +109,7 @@ cluster_ids1 <- c("Endothelium",   #cluster 0
                   "Fibroblast",    #cluster 13
                   "Myofibroblast", #cluster 14
                   "Fibroblast"     #cluster 15
-                 )
+)
 
 names(cluster_ids1) <- levels(P7_integrated)
 P7_integrated <- RenameIdents(P7_integrated, cluster_ids1)
@@ -119,17 +119,17 @@ P7_integrated$Celltype_main <- Idents(P7_integrated)
 ### Cell atlas visualization ###
 source('./cellatlas_umap.R')
 cluster_atlas <- cellatlas_umap(P7_integrated, 
-                               idents = 'seurat_clusters',
-                               levels = c('0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13', '14', '15'), 
-                               hull_alpha = 0.1, 
-                               hull_size = 0.5, 
-                               hull_lty = 2, 
-                               hull_delta = 0.8, 
-                               dot_color = c("#f38989", "#f9a341", "#f48521", "#ef6a45", "#549da3", "#96cb8f", "#f9b769", "#ec5051", "#a4cde1", "#67a4cc","#a48cbe","#e32422","#b2db87","#4dae47","#5c9e43","#b79973"),  # A list of color codes
-                               dot_size = 0.5, 
-                               dot_alpha = 1, 
-                               label_size = 4, 
-                               label_color = F 
+                                idents = 'seurat_clusters',
+                                levels = c('0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13', '14', '15'), 
+                                hull_alpha = 0.1, 
+                                hull_size = 0.5, 
+                                hull_lty = 2, 
+                                hull_delta = 0.8, 
+                                dot_color = c("#f38989", "#f9a341", "#f48521", "#ef6a45", "#549da3", "#96cb8f", "#f9b769", "#ec5051", "#a4cde1", "#67a4cc","#a48cbe","#e32422","#b2db87","#4dae47","#5c9e43","#b79973"),  # A list of color codes
+                                dot_size = 0.5, 
+                                dot_alpha = 1, 
+                                label_size = 4, 
+                                label_color = F 
 )
 cluster_atlas
 
@@ -147,27 +147,27 @@ celltype_atlas <- cellatlas_umap(P7_integrated,
                                  hull_size = 0.5, 
                                  hull_lty = 2,
                                  hull_delta = 0.8,
-                                 dot_color = c("#ea5c6f","#f7905a","#e187cb","#fb948d","#e2b159","#ebed6f","#b2db87","#7ee7bb"),  
+                                 dot_color = c("#ea5c6f", "#f7905a", "#e187cb", "#fb948d", "#e2b159", "#ebed6f", "#b2db87", "#7ee7bb"),  
                                  dot_size = 0.5,
                                  dot_alpha = 1, 
                                  label_size = 4, 
                                  label_color = F
-                                 )
+)
 celltype_atlas
 
 oxygen_atlas <- cellatlas_umap(P7_integrated, 
                                idents = 'Oxygen',
-                               levels = c('Normoxia','Hyperoxia'),
+                               levels = c('Normoxia', 'Hyperoxia'),
                                hull_alpha = 0,
                                hull_size = 0, 
                                hull_lty = 2, 
                                hull_delta = 0, 
-                               dot_color = c("#4DBBD5FF",'#E64B35FF'),  
+                               dot_color = c("#4DBBD5FF", '#E64B35FF'),  
                                dot_size = 0.5, 
                                dot_alpha = 1, 
                                label_size = 4, 
                                label_color = T
-                              )
+)
 oxygen_atlas
 
 
@@ -180,7 +180,7 @@ marker = c('Gpihbp1', 'Kit', # gCap
            'Pecam1', 'Eng', 'Cd34', 'Cdh5', # General Endothelium
            'Col1a1', 'Col1a2', 'Col3a1', 'Fn1', 'Tagln', 'Acta2', 'Myl9', 'Myh11', # Mesenchyme
            'Tgfbi', 'Wnt5a' # Myofibroblast
-          )
+)
 
 P7_dotplot <- sce_dotplot(P7_integrated,
                           assay = 'SCT',
@@ -194,8 +194,8 @@ P7_dotplot <- sce_dotplot(P7_integrated,
                                      'Fibroblast',
                                      'Myofibroblast',
                                      'SMC'
-                                    ) 
-                         )
+                          ) 
+)
 
 P7_dotplot
 
@@ -210,16 +210,8 @@ marker1 = c('Adh5', 'Aldh3a2', 'Gapdh', 'Gpi1', 'Ldha', 'Pkm', 'Slc2a1', # Glyco
             'Acsl1', 'Acsl4', 'Acaca', 'Degs1', # Fatty acid synthesis
             'Apoe', 'Lipa', 'Lipe', 'Lpl', 'Mttp', 'Pnpla2', # Lipid metabolism and transport
             'Cyc1', 'Ndufs1', 'Ndufs2', 'Ndufs3', 'Pdha1', 'Sdha' # Oxidative phosphorylation
-           )
+)
 
-P7_Ec_dotplot <- sce_dotplot(subset(P7_integrated, idents = c('gCap','aCap','Art','Vein','EndoMT')),
-                             assay = 'SCT',
-                             idents = 'Oxygen',
-                             markers = marker1,
-                             levels = c('Normoxia', 'Hyperoxia'),
-                             title = 'Endothelium',
-                             title_size = 10
-                            )
 
 P7_EndoMT_dotplot <- sce_dotplot(subset(P7_integrated, idents = c('EndoMT')),
                                  assay = 'SCT',
@@ -228,12 +220,13 @@ P7_EndoMT_dotplot <- sce_dotplot(subset(P7_integrated, idents = c('EndoMT')),
                                  levels = c('Normoxia', 'Hyperoxia'),
                                  title = 'EndoMT',
                                  title_size = 10
-                                )
+)
 
-wrap_plots(P7_Ec_dotplot + P7_EndoMT_dotplot)
+P7_EndoMT_dotplot
 
 
 ### Vlnplot of EndoMT markers ###
+source('./Split_Vln_stacked.R')
 levels = c('gCap',
            'aCap',
            'Art',
@@ -247,12 +240,12 @@ Idents(P7_integrated) <- 'Celltype'
 
 Split_Vln_stacked(P7_integrated,
                   assay = 'SCT',
-                  feature = c('Acta2','Myl9','Tagln',
-                              'Cdh5','Eng','Pecam1'),
+                  feature = c('Acta2', 'Myl9', 'Tagln',
+                              'Cdh5', 'Eng', 'Pecam1'),
                   split.plot = F,
                   pt.size = 0, 
                   size = 10,
-                  cols = c("#ea5c6f","#f7905a","#e187cb","#fb948d","#e2b159","#ebed6f","#b2db87","#7ee7bb"),
+                  cols = c("#ea5c6f", "#f7905a", "#e187cb", "#fb948d", "#e2b159", "#ebed6f", "#b2db87", "#7ee7bb"),
                   test = F)
 
 
@@ -265,7 +258,7 @@ sds <- slingshot(P7_integrated1,
                  clusterLabels = "Celltype_main",
                  reducedDim = 'UMAP' ,
                  start.clus = "Endothelium"
-                )
+)
 
 source('./pseudotime_umap.R')
 pseu1 <- pseudotime_umap(P7_integrated,
@@ -276,7 +269,7 @@ pseu1 <- pseudotime_umap(P7_integrated,
                          dot_size = 0.5, 
                          dot_alpha = 1, 
                          label_size = 4
-                        )
+)
 pseu1
 
 pseu2 <- pseudotime_umap(P7_integrated,
@@ -287,7 +280,7 @@ pseu2 <- pseudotime_umap(P7_integrated,
                          dot_size = 0.5, 
                          dot_alpha = 1, 
                          label_size = 4
-                        )
+)
 pseu2
 
 
@@ -319,17 +312,17 @@ mmu_fgsea_sets <- c(c2_KEGG_mmu_fgsea_sets,
                     c2_REACTOME_mmu_fgsea_sets,
                     c2_WIKIPATHWAYS_mmu_fgsea_sets,
                     c5_GOBP_mmu_fgsea_sets
-                   )
+)
 
 source("./FindMarker_genes.R")
 P7_integrated <- PrepSCTFindMarkers(P7_integrated)
 DEGs <- FindMarker_genes(dataset = P7_integrated, 
                          assay = 'SCT',
-                         clusters = c('gCap','aCap','Art','Vein','EndoMT','Fibroblast','SMC','Myofibroblast'),
-                         comparison = c("Oxygen", "Normoxia", "Hyperoxia"),
+                         clusters = c('gCap', 'aCap', 'Art', 'Vein', 'EndoMT', 'Fibroblast', 'SMC', 'Myofibroblast'),
+                         comparison = c('Oxygen', 'Normoxia', 'Hyperoxia'),
                          logfc.threshold = 0,  
                          min.cells.group = 1
-                        )  
+)  
 
 source("./sce_GSEA.R")
 gsea_res <- sce_GSEA(DEGs, pathway = mmu_fgsea_sets)
@@ -350,7 +343,7 @@ levels = c("Carbohydrate metabolism",
            "Signaling molecules and interaction",
            "Cell growth and death",
            "Immune system"
-          )
+)
 bar <- sce_GSEAbarplot(sigPathway, 
                        levels = levels[1:7], 
                        maxPathway = c('Carbohydrate catabolic process',
@@ -360,7 +353,7 @@ bar <- sce_GSEAbarplot(sigPathway,
                                       'Cytokine mediated signaling pathway',
                                       'p53 signaling pathway',
                                       'Interleukin-4 and interleukin-13 signaling'
-                                     ),
+                       ),
                        category_color = 'grey10',
                        pathway_color = c("Carbohydrate metabolism" = "#66C2A5", 
                                          "Energy metabolism" = "#8DA0CB", 
