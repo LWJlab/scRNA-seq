@@ -14,6 +14,7 @@ Split_Vln_stacked <- function(object, # scobj
   suppressPackageStartupMessages({
     library(Seurat)
     library(dittoSeq)
+    library(deeptime)
     library(ggplot2)
     library(ggpubr)})
   
@@ -109,31 +110,39 @@ Split_Vln_stacked <- function(object, # scobj
   }else{
     p2 <- VlnPlot(object, 
                   assay = assay,
-                  features = tail(feature,1), split.by = split.by,
-                  split.plot=split.plot, pt.size = pt.size)+
-      theme_bw()+
-      theme(axis.text.y = element_blank(),
-            axis.text.x = element_text(colour = 'black', size = size, angle = 45, vjust = 1, hjust = 1),
-            axis.title.y = element_text(size = rel(1), angle = 0, vjust = 0.5),
-            axis.ticks = element_blank(),
-            title = element_blank(),
-            legend.position = 'none',
-            panel.border = element_rect(fill = NA),
-            plot.margin = margin(-0.05,0,0,0, "cm"),
-            panel.grid = element_blank())+
-      ylab(tail(feature,1))+
-      scale_fill_manual(values = cols)
-    p22 <- p2+ylim(0, max(p2$data[tail(feature,1)]+1.5))+
-      stat_compare_means(aes(group = split),
-                         label =sig_label,
-                         label.y = max(p2$data[tail(feature,1)]),
-                         hide.ns=T)
+                  features = tail(feature, 1),
+                  split.by = split.by,
+                  split.plot = split.plot,
+                  pt.size = pt.size)+
+          theme_bw()+
+          theme(axis.text.y = element_blank(),
+                axis.text.x = element_text(colour = 'black', 
+                                           size = size, 
+                                           angle = 45, 
+                                           vjust = 1, 
+                                           hjust = 1),
+                axis.title.y = element_text(size = rel(1), 
+                                            angle = 0, 
+                                            vjust = 0.5),
+                axis.ticks = element_blank(),
+                title = element_blank(),
+                legend.position = 'none',
+                panel.border = element_rect(fill = NA),
+                plot.margin = margin(-0.05, 0, 0, 0, "cm"),
+                panel.grid = element_blank())+
+          ylab(tail(feature, 1))+
+          scale_fill_manual(values = cols)
+    p22 <- p2 + ylim(0, max(p2$data[tail(feature,1)] + 1.5))+
+                stat_compare_means(aes(group = split),
+                                   label = sig_label,
+                                   label.y = max(p2$data[tail(feature, 1)]),
+                                   hide.ns = T)
   }
   if(test==T){
     p1list[[length(feature)]] <- p22
   }else{
     p1list[[length(feature)]] <- p2
   }
-  p<- deeptime::ggarrange2(plots = p1list, nrow = length(feature))
+  p <- deeptime::ggarrange2(plots = p1list, nrow = length(feature))
   return(p)
 }
