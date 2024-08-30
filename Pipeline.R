@@ -197,7 +197,7 @@ marker1 = c('Adh5', 'Aldh3a2', 'Gapdh', 'Gpi1', 'Ldha', 'Pkm', 'Slc2a1', # Glyco
             'Cyc1', 'Ndufs1', 'Ndufs2', 'Ndufs3', 'Pdha1', 'Sdha' # Oxidative phosphorylation
            )
 
-P7_Ec_dotplot <- sce_dotplot(subset(GSE151974_subset_P7_integrated1, idents = c('gCap','aCap','Art','Vein','EndoMT')),
+P7_Ec_dotplot <- sce_dotplot(subset(P7_integrated, idents = c('gCap','aCap','Art','Vein','EndoMT')),
                              assay = 'SCT',
                              idents = 'Oxygen',
                              markers = marker1,
@@ -206,7 +206,7 @@ P7_Ec_dotplot <- sce_dotplot(subset(GSE151974_subset_P7_integrated1, idents = c(
                              title_size = 10
                             )
 
-P7_EndoMT_dotplot <- sce_dotplot(subset(GSE151974_subset_P7_integrated1, idents = c('EndoMT')),
+P7_EndoMT_dotplot <- sce_dotplot(subset(P7_integrated, idents = c('EndoMT')),
                                  assay = 'SCT',
                                  idents = 'Oxygen',
                                  markers = marker1,
