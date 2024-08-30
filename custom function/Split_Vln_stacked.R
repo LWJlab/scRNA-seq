@@ -4,11 +4,12 @@ Split_Vln_stacked <- function(object, # scobj
                               split.by = NULL, # Split clusters into different groups
                               split.plot = NULL, # Split VlnPlot
                               pt.size, # The size of dot
-                              size,#坐标轴轴的文字大小
-                              cols,#颜色设置（一个向量）
-                              test=T,#是否需要检验
-                              test_method = NULL,#c('t.test','wilcox.test'),#两组检验方法
-                              sig_label= NULL) {#标注*或者pvalue,, c("p.signif","p.format"))
+                              size, # The size of axis text
+                              cols, # The color of clusters
+                              test = F, # Statistical analysis
+                              test_method = NULL, # c('t.test','wilcox.test')
+                              sig_label= NULL) # Add * or p value, c("p.signif","p.format"))
+{
   
   suppressPackageStartupMessages({
     library(Seurat)
