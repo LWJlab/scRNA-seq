@@ -177,7 +177,7 @@ P7_dotplot <- sce_dotplot(P7_integrated,
                                      'Vein',
                                      'EndoMT',
                                      'Fibroblast',
-                                     'Myfibroblast',
+                                     'Myofibroblast',
                                      'SMC'
                                     ) 
                          )
@@ -216,6 +216,29 @@ P7_EndoMT_dotplot <- sce_dotplot(subset(P7_integrated, idents = c('EndoMT')),
                                 )
 
 wrap_plots(P7_Ec_dotplot + P7_EndoMT_dotplot)
+
+
+### Vlnplot of EndoMT markers ###
+levels = c('gCap',
+           'aCap',
+           'Art',
+           'Vein',
+           'EndoMT',
+           'Fibroblast',
+           'Myofibroblast',
+           'SMC')
+P7_integrated$Celltype <- factor(P7_integrated$Celltype, levels = levels) 
+Idents(P7_integrated) <- 'Celltype'
+
+Split_Vln_stacked(P7_integrated,
+                  assay = 'SCT',
+                  feature = c('Acta2','Myl9','Tagln',
+                              'Cdh5','Eng','Pecam1'),
+                  split.plot = F,
+                  pt.size = 0, 
+                  size = 10,
+                  cols = c("#ea5c6f","#f7905a","#e187cb","#fb948d","#e2b159","#ebed6f","#b2db87","#7ee7bb"),
+                  test = F)
 
 
 ### Trajectory analysis ###
