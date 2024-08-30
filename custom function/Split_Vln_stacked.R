@@ -20,41 +20,53 @@ Split_Vln_stacked <- function(object, # scobj
   p1list <- list()
   for (i in 1:length(feature)){
     if(test==T){
-      p1 <- VlnPlot(object, assay = assay, features = feature[i], split.by = split.by,
-                    split.plot=split.plot, pt.size = pt.size)+
+      p1 <- VlnPlot(object, 
+                    assay = assay, 
+                    features = feature[i], 
+                    split.by = split.by,
+                    split.plot = split.plot, 
+                    pt.size = pt.size)+
             theme_bw()+
             theme(axis.text = element_blank(),
                   axis.title.x = element_blank(),
-                  axis.title.y = element_text(size = size, angle = 0, vjust = 0.5),
+                  axis.title.y = element_text(size = size, 
+                                              angle = 0, 
+                                              vjust = 0.5),
                   axis.ticks = element_blank(),
-              title = element_blank(),
-              legend.position = 'none',
-              panel.border = element_rect(fill = NA),
-              plot.margin = margin(-0.05,0,-0.05,0, "cm"),
-              panel.grid = element_blank())+
-        ylab(feature[i])+
-        scale_fill_manual(values = cols)
-      p11 <- p1+ylim(0, max(p1$data[feature[i]]+1.5))+
-        stat_compare_means(aes(group = split),
-                           label =sig_label,
-                           label.y = max(p1$data[feature[i]]),
-                           hide.ns=T)
+                  title = element_blank(),
+                  legend.position = 'none',
+                  panel.border = element_rect(fill = NA),
+                  plot.margin = margin(-0.05, 0, -0.05, 0, "cm"),
+                  panel.grid = element_blank())+
+            ylab(feature[i])+
+            scale_fill_manual(values = cols)
+      p11 <- p1 + ylim(0, max(p1$data[feature[i]] + 1.5))+
+                  stat_compare_means(aes(group = split),
+                                     label = sig_label,
+                                     label.y = max(p1$data[feature[i]]),
+                                     hide.ns = T)
       p1list[[i]] <- p11
     }else{
-      p1 <- VlnPlot(object,  assay = assay, features = feature[i], split.by = split.by,
-                    split.plot=split.plot, pt.size = pt.size)+
-        theme_bw()+
-        theme(axis.text = element_blank(),
-              axis.title.x = element_blank(),
-              axis.title.y = element_text(size = size, angle = 0, vjust = 0.5),
-              axis.ticks = element_blank(),
-              title = element_blank(),
-              legend.position = 'none',
-              panel.border = element_rect(fill = NA),
-              plot.margin = margin(-0.05,0,-0.05,0, "cm"),
-              panel.grid = element_blank())+
-        ylab(feature[i])+
-        scale_fill_manual(values = cols)
+      p1 <- VlnPlot(object,  
+                    assay = assay,
+                    features = feature[i], 
+                    split.by = split.by,
+                    split.plot = split.plot, 
+                    pt.size = pt.size)+
+            theme_bw()+
+            theme(axis.text = element_blank(),
+                  axis.title.x = element_blank(),
+                  axis.title.y = element_text(size = size,
+                                              angle = 0,
+                                              vjust = 0.5),
+                  axis.ticks = element_blank(),
+                  title = element_blank(),
+                  legend.position = 'none',
+                  panel.border = element_rect(fill = NA),
+                  plot.margin = margin(-0.05, 0, -0.05, 0, "cm"),
+                  panel.grid = element_blank())+
+            ylab(feature[i])+
+            scale_fill_manual(values = cols)
       p1list[[i]] <- p1
     }
   }
