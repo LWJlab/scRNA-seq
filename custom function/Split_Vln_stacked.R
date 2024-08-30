@@ -1,5 +1,5 @@
-Split_Vln_stacked <- function(object,#seurat对象
-                              assay,#矩阵
+Split_Vln_stacked <- function(object, #scobj
+                              assay, 
                               feature,#需要展示的基因（一个向量）
                               split.by=NULL,#split分组（两组）
                               split.plot=NULL,#是否需要做split Violn
