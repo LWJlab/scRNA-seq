@@ -1,9 +1,9 @@
-Split_Vln_stacked <- function(object, #scobj
-                              assay, 
-                              feature,#需要展示的基因（一个向量）
-                              split.by=NULL,#split分组（两组）
-                              split.plot=NULL,#是否需要做split Violn
-                              pt.size, #点的大小（0表示不显示散点）
+Split_Vln_stacked <- function(object, # scobj
+                              assay, # Name of assay to use, defaults to the active assay
+                              feature, # A list of genes
+                              split.by = NULL, # Split clusters into different groups
+                              split.plot = NULL, # Split VlnPlot
+                              pt.size, # The size of dot
                               size,#坐标轴轴的文字大小
                               cols,#颜色设置（一个向量）
                               test=T,#是否需要检验
