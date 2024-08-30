@@ -118,27 +118,42 @@ P7_integrated$Celltype_main <- Idents(P7_integrated)
 
 ### Cell atlas visualization ###
 source('./cellatlas_umap.R')
-atlas <- cellatlas_umap(P7_integrated, 
-                        idents = 'Celltype',
-                        levels = c('gCap',
-                                   'aCap',
-                                   'Art',
-                                   'Vein',
-                                   'EndoMT',
-                                   'Fibroblast',
-                                   'Myofibroblast',
-                                   'SMC'), 
-                        hull_alpha = 0.1, 
-                        hull_size = 0.5, 
-                        hull_lty = 2,
-                        hull_delta = 0.8,
-                        dot_color = c("#ea5c6f","#f7905a","#e187cb","#fb948d","#e2b159","#ebed6f","#b2db87","#7ee7bb"),  
-                        dot_size = 0.5,
-                        dot_alpha = 1, 
-                        label_size = 4, 
-                        label_color = F
-                       )
-atlas
+cluster_atlas <- cellatlas_umap(P7_integrated, 
+                               idents = 'seurat_clusters',
+                               levels = c('0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13', '14', '15'), 
+                               hull_alpha = 0.1, 
+                               hull_size = 0.5, 
+                               hull_lty = 2, 
+                               hull_delta = 0.8, 
+                               dot_color = c("#f38989", "#f9a341", "#f48521", "#ef6a45", "#549da3", "#96cb8f", "#f9b769", "#ec5051", "#a4cde1", "#67a4cc","#a48cbe","#e32422","#b2db87","#4dae47","#5c9e43","#b79973"),  # A list of color codes
+                               dot_size = 0.5, 
+                               dot_alpha = 1, 
+                               label_size = 4, 
+                               label_color = F 
+)
+cluster_atlas
+
+celltype_atlas <- cellatlas_umap(P7_integrated, 
+                                 idents = 'Celltype',
+                                 levels = c('gCap',
+                                            'aCap',
+                                            'Art',
+                                            'Vein',
+                                            'EndoMT',
+                                            'Fibroblast',
+                                            'Myofibroblast',
+                                            'SMC'), 
+                                 hull_alpha = 0.1, 
+                                 hull_size = 0.5, 
+                                 hull_lty = 2,
+                                 hull_delta = 0.8,
+                                 dot_color = c("#ea5c6f","#f7905a","#e187cb","#fb948d","#e2b159","#ebed6f","#b2db87","#7ee7bb"),  
+                                 dot_size = 0.5,
+                                 dot_alpha = 1, 
+                                 label_size = 4, 
+                                 label_color = F
+                                 )
+celltype_atlas
 
 oxygen_atlas <- cellatlas_umap(P7_integrated, 
                                idents = 'Oxygen',
