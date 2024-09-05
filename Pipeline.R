@@ -207,7 +207,7 @@ marker1 = c('Adh5', 'Aldh3a2', 'Gapdh', 'Gpi1', 'Ldha', 'Pkm', 'Slc2a1', # Glyco
             'Acat1', 'Aldh7a1', 'Gcdh',  # Amino acid metabolism
             'Cpt1a', 'Cpt1c', 'Cpt2', # Carnitine shuttle
             'Acaa2', 'Acadm', 'Acads', 'Acadsb', 'Acadvl', 'Acox3', 'Echs1', 'Eci1', 'Eci2', 'Hadh', 'Hadha','Hadhb', # β-oxidation
-            'Acsl1', 'Acsl4', 'Acaca', 'Degs1', # Fatty acid synthesis
+            'Acly', 'Acsl1', 'Acsl4', 'Acaca', 'Degs1', 'Elovl6', 'Fasn', 'Scd1', 'Slc25a1', 'Thrsp', # Fatty acid synthesis
             'Apoe', 'Lipa', 'Lipe', 'Lpl', 'Mttp', 'Pnpla2', # Lipid metabolism and transport
             'Cyc1', 'Ndufs1', 'Ndufs2', 'Ndufs3', 'Pdha1', 'Sdha' # Oxidative phosphorylation
 )
