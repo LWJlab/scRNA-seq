@@ -370,3 +370,97 @@ bar <- sce_GSEAbarplot(sigPathway,
                        xlim = c(0, 2.3))
 
 bar
+
+
+### P14 seperation ###
+P14_subset <- subset(subset, idents = c('P14_Hyperoxia', 'P14_Normoxia'))
+
+### ProcessExper ###
+P14_integrated = processExper(P14_subset, 
+                              sct.method = T, 
+                              reduction = 'cca')
+
+
+### Cell clustering and dimensional reduction ###
+P14_integrated <- RunPCA(P14_integrated)
+dims = 1:40
+P14_integrated <- RunUMAP(P14_integrated,
+                          dims = dims,
+                          reduction.name = "umap") %>%
+                  FindNeighbors(dims = dims) %>%
+                  FindClusters(resolution = c(seq(0, 1, .1)))
+
+clustree(P14_integrated) # Select suitable resolution
+
+P14_integrated <- FindClusters(P14_integrated, resolution = 0.5)
+
+### Cell annotation ###
+p2 <- DotPlot(P14_integrated, 
+              assay = 'SCT',
+              group.by = 'seurat_clusters',
+              features = c('Gpihbp1', 'Kit', # gCap
+                           'Car4', 'Kdr', # aCap
+                           'Cxcl12', 'Pcsk5', # Art
+                           'Vegfc', 'Prss23', # Vein
+                           'Pecam1', 'Eng', 'Cd34', 'Cdh5', # Gen ECs
+                           'Col1a1', 'Col1a2', 'Col3a1', 'Fn1', 'Tagln', 'Acta2', 'Myl9', 'Myh11', # Mesenchyme
+                           'Tgfbi','Wnt5a' #Myofibroblast
+             ) 
+) +
+  theme(axis.title = element_blank(),
+        axis.line = element_blank(),
+        axis.ticks.x = element_blank(),
+        axis.text.x = element_text(size = 10),
+        panel.background = element_rect(color = 'black'))+
+  coord_flip()
+
+p3 <- DimPlot(P14_integrated, 
+              reduction = "umap", 
+              group.by = "seurat_clusters", 
+              label = T)
+wrap_plots(p2 + p3) # Reference
+
+
+
+cluster_ids2 <- c("Fibroblast",    #cluster 0
+                  "Myofibroblast", #cluster 1
+                  "gCap",          #cluster 2
+                  "aCap",          #cluster 3
+                  "EndoMT",        #cluster 4
+                  "Fibroblast",    #cluster 5
+                  "Fibroblast",    #cluster 6
+                  "Fibroblast",    #cluster 7
+                  "Art",           #cluster 8
+                  "Vein",          #cluster 9
+                  "SMC",           #cluster 10
+                  "Fibroblast",    #cluster 11
+                  "Fibroblast"     #cluster 12
+)
+
+names(cluster_ids2) <- levels(P14_integrated)
+P14_integrated <- RenameIdents(P14_integrated, cluster_ids2)
+P14_integrated$Celltype <- Idents(P14_integrated)
+
+Idents(P14_integrated) <- 'seurat_clusters'
+cluster_ids3 <- c("Fibroblast",    #cluster 0
+                  "Myofibroblast", #cluster 1
+                  "Endothelial",   #cluster 2
+                  "Endothelial",   #cluster 3
+                  "EndoMT",        #cluster 4
+                  "Fibroblast",    #cluster 5
+                  "Fibroblast",    #cluster 6
+                  "Fibroblast",    #cluster 7
+                  "Endothelial",   #cluster 8
+                  "Endothelial",   #cluster 9
+                  "SMC",           #cluster 10
+                  "Fibroblast",    #cluster 11
+                  "Fibroblast"     #cluster 12
+)
+
+names(cluster_ids3) <- levels(P14_integrated)
+P14_integrated <- RenameIdents(P14_integrated, cluster_ids3)
+P14_integrated$Celltype_main <- Idents(P14_integrated)
+
+### Cell proportion ###
+table(GSE151974_subset_P7_integrated1$Celltype_main, GSE151974_subset_P7_integrated1$Oxygen)
+table(GSE151974_subset_P7_integrated1$Celltype_main, GSE151974_subset_P7_integrated1$Oxygen)
