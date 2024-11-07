@@ -4,6 +4,7 @@ Split_Vln_stacked <- function(object, # scobj
                               split.by = NULL, # Split clusters into different groups
                               split.plot = NULL, # Split VlnPlot
                               pt.size, # The size of dot
+                              face = 'bold', # # The font of x-axis text and y-axis title (Default: bold)
                               text_x_size = 10, # The size of x-axis text (Default: 10)
                               text_y_size = 10, # The size of y-axis text (Default: 10)
                               title_y_size = 10, # The size of y-axis title (Default: 10)
@@ -31,7 +32,7 @@ Split_Vln_stacked <- function(object, # scobj
               axis.title.x = element_blank(),
               axis.title.y = element_text(size = title_y_size,
                                           colour = 'black',
-                                          face = 'bold',
+                                          face = face,
                                           angle = 0,
                                           vjust = 0.5),
               axis.ticks.x = element_blank(),
@@ -56,13 +57,13 @@ Split_Vln_stacked <- function(object, # scobj
       theme(axis.text.y = element_text(size = text_y_size),
             axis.text.x = element_text(size = text_x_size, 
                                        colour = 'black',
-                                       face = 'bold',
+                                       face = face,
                                        angle = 45, 
                                        vjust = 1, 
                                        hjust = 1),
             axis.title.y = element_text(size = title_y_size,
                                         colour = 'black',
-                                        face = 'bold', 
+                                        face = face, 
                                         angle = 0, 
                                         vjust = 0.5),
             axis.ticks = element_blank(),
@@ -92,13 +93,13 @@ Split_Vln_stacked <- function(object, # scobj
       theme(axis.text.y = element_text(size = text_y_size),
             axis.text.x = element_text(size = text_x_size, 
                                        colour = 'black',
-                                       face = 'bold',
+                                       face = face,
                                        angle = 45, 
                                        vjust = 1, 
                                        hjust = 1),
             axis.title.y = element_text(size = title_y_size, 
                                         colour = 'black',
-                                        face = 'bold',
+                                        face = face,
                                         angle = 0, 
                                         vjust = 0.5),
             axis.ticks.x = element_blank(),
