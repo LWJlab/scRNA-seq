@@ -5,6 +5,7 @@ library(Seurat)
 library(SeuratObject)
 library(clustree)
 library(dplyr)
+library(tidyverse)
 library(patchwork)
 options(stringsAsFactors = FALSE)
 
