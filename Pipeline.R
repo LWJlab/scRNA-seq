@@ -244,7 +244,10 @@ Split_Vln_stacked(P7_integrated,
                               'Cdh5', 'Eng', 'Pecam1'),
                   split.plot = F,
                   pt.size = 0, 
-                  size = 10,
+                  face = 'bold',
+                  text_x_size = 12,
+                  text_y_size = 10,
+                  title_y_size = 14,
                   cols = c("#ea5c6f", "#f7905a", "#e187cb", "#fb948d", "#e2b159", "#ebed6f", "#b2db87", "#7ee7bb"),
                   test = F)
 
