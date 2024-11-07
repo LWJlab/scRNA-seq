@@ -4,6 +4,7 @@
 library(Seurat)
 library(SeuratObject)
 library(clustree)
+library(dplyr)
 library(patchwork)
 options(stringsAsFactors = FALSE)
 
@@ -467,3 +468,10 @@ P14_integrated$Celltype_main <- Idents(P14_integrated)
 ### Cell proportion ###
 table(GSE151974_subset_P7_integrated1$Celltype_main, GSE151974_subset_P7_integrated1$Oxygen)
 table(GSE151974_subset_P7_integrated1$Celltype_main, GSE151974_subset_P7_integrated1$Oxygen)
+
+
+
+
+###################################
+##### GEO accession:GSE211356 #####
+###################################
