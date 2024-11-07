@@ -38,8 +38,8 @@ dims = 1:40
 P7_integrated <- RunUMAP(P7_integrated,
                          dims = dims,
                          reduction.name = "umap") %>%
-  FindNeighbors(dims = dims) %>%
-  FindClusters(resolution = c(seq(0, 1, .1)))
+                 FindNeighbors(dims = dims) %>%
+                 FindClusters(resolution = c(seq(0, 1, .1)))
 
 clustree(P7_integrated) # Select suitable resolution
 
