@@ -1,10 +1,10 @@
-RunQC <- function(object,
+RunQC <- function(object, # scobj
                   org = 'hsa', 
                   LowerFeatureCutoff = 200,
                   UpperFeatureCutoff = "MAD",
-                  UpperMitoCutoff = 10,
+                  UpperMitoCutoff = 10, 
                   Hb = T, # percent.Hb
-                  HbCutoff = 0,
+                  HbCutoff = 0, 
                   decontX = T,
                   decontXCutoff = 0.2,
                   doubletdetection = T,
@@ -15,6 +15,7 @@ RunQC <- function(object,
     library(scds)
     library(dplyr)
     library(decontX)})
+  
   if(UpperFeatureCutoff != "MAD" & !is.numeric(UpperFeatureCutoff)) {
     stop("Please use MAD and numeric cutoff for UpperFeatureCount!")
   }
@@ -30,7 +31,7 @@ RunQC <- function(object,
   if(org == 'hsa'){
     object[["percent.mito"]] <- PercentageFeatureSet(object, pattern = "^MT-")
     object[["percent.rb"]] <- PercentageFeatureSet(object, pattern = "^RP[SL]")
-    Hb_genes <- c("HBA1","HBA2","HBB","HBD","HBE1","HBG1","HBG2","HBM","HBQ1","HBZ")
+    Hb_genes <- c("HBA1", "HBA2", "HBB", "HBD", "HBE1", "HBG1", "HBG2", "HBM", "HBQ1", "HBZ")
     Hb_m <- match(Hb_genes, rownames(object@assays$RNA)) 
     Hb_genes <- rownames(object@assays$RNA)[Hb_m]
     Hb_genes <- Hb_genes[!is.na(Hb_genes)]  
@@ -39,16 +40,16 @@ RunQC <- function(object,
   }else{
     object[["percent.mito"]] <- PercentageFeatureSet(object, pattern = "^mt-")
     object[["percent.rb"]] <- PercentageFeatureSet(object, pattern = "^Rp[sl]")
-    Hb_genes <-  c('Hba-a1','Hba-a2','Hbb-bs','Hbb-bt','Hbb-b1')
+    Hb_genes <-  c("Hba-a1", "Hba-a2", "Hbb-bs", "Hbb-bt", "Hbb-b1")
     Hb_m <- match(Hb_genes, rownames(object@assays$RNA)) 
     Hb_genes <- rownames(object@assays$RNA)[Hb_m]
     Hb_genes <- Hb_genes[!is.na(Hb_genes)]  
     object[["percent.hb"]] <- PercentageFeatureSet(object, features = Hb_genes)
   }
   
-  write.csv(object@meta.data, file=paste(dir,"/percentmito_hb_rb.csv",sep = ""))
-  png(paste(dir, "/QC_Vlnplot.png",sep = ""), width = 10, height = 6, units = "in", res = 600)
-  print({VlnPlot(object = object, features = c("nFeature_RNA", "nCount_RNA", "percent.mito", "percent.hb", 'percent.rb'),
+  write.csv(object@meta.data, file = paste(dir, "/percentmito_hb_rb.csv", sep = ""))
+  png(paste(dir, "/QC_Vlnplot.png", sep = ""), width = 10, height = 6, units = "in", res = 600)
+  print({VlnPlot(object = object, features = c("nFeature_RNA", "nCount_RNA", "percent.mito", "percent.hb", "percent.rb"),
                  ncol = 5)})
   dev.off()
   
@@ -56,11 +57,11 @@ RunQC <- function(object,
   object@misc[["filterstats"]][['TotalCellsbeforefilteration']] <- dim(object)[2]
   
 
-    #Using a median + 3 MAD cutoff for high genes.
+    # Using a median + 3 MAD cutoff for high genes.
     if(UpperFeatureCutoff == "MAD"){
-      UpperFeatureCutoff <- median(object$nFeature_RNA) + 3*mad(object$nFeature_RNA)
+      UpperFeatureCutoff <- median(object$nFeature_RNA) + 3 * mad(object$nFeature_RNA)
       }
-    #Detect percent.mito, percent.hb, nFeature_RNA, Doublet, ambient RNA
+    # Detect percent.mito, percent.hb, nFeature_RNA, Doublet, ambient RNA
     object@misc[["filterstats"]][['TotalSamples']] <- dim(object[[]][1])[1]
     
     cells.use <- colnames(object)[which(object[[]]['percent.mito'] < UpperMitoCutoff)]
