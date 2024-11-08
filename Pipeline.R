@@ -180,9 +180,10 @@ marker = c('Gpihbp1', 'Kit', # gCap
            'Cxcl12', 'Pcsk5', # Art
            'Vegfc', 'Prss23', # Vein
            'Pecam1', 'Eng', 'Cd34', 'Cdh5', # General Endothelium
-           'Col1a1', 'Col1a2', 'Col3a1', 'Fn1', 'Tagln', 'Acta2', 'Myl9', 'Myh11', # Mesenchyme
+           'Col1a1', 'Col1a2', 'Col3a1', 'Fn1', # Fibroblast
+           'Tagln', 'Acta2', 'Myl9', 'Myh11', # SMC
            'Tgfbi', 'Wnt5a' # Myofibroblast
-)
+          )
 
 P7_dotplot <- sce_dotplot(P7_integrated,
                           assay = 'SCT',
