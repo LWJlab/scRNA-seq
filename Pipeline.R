@@ -312,7 +312,7 @@ source("./FindMarker_genes.R")
 source("./sce_volcanoplot.R")
 P7_integrated <- PrepSCTFindMarkers(P7_integrated)
 Idents(P7_integrated) <- "Celltype_fine"
-DEG <- FindMarker_genes(object = subset(P7_integrated, Oxygen == "Hyperoxia"), 
+DEG <- FindMarker_genes(object = subset(P7_integrated, Oxygen == "Normoxia"), 
                                              assay = "SCT",
                                              clusters = c("gCap", "aCap", "Art", "Vein", "EndoMT", "Fibroblast", "Myofibroblast", "SMC"),
                                              comparison = c("Sex", "Female", "Male"),
@@ -320,7 +320,7 @@ DEG <- FindMarker_genes(object = subset(P7_integrated, Oxygen == "Hyperoxia"),
                                              min.cells.group = 1
                        )  
 
-DEG1 <- FindMarker_genes(object = subset(P7_integrated, Oxygen == "Normoxia"), 
+DEG1 <- FindMarker_genes(object = subset(P7_integrated, Oxygen == "Hyperoxia"), 
                                          assay = "SCT",
                                          clusters = c("gCap", "aCap", "Art", "Vein", "EndoMT", "Fibroblast", "Myofibroblast", "SMC"),
                                          comparison = c("Sex", "Female", "Male"),
@@ -330,7 +330,7 @@ DEG1 <- FindMarker_genes(object = subset(P7_integrated, Oxygen == "Normoxia"),
 
 levels <- c("gCap", "aCap", "Art", "Vein", "EndoMT", "Fibroblast", "Myofibroblast", "SMC")
 volcano1 <- sce_volcanoplot(DEG,
-                           levels = levels, 
+                            levels = levels, 
                             title = "Male vs Female (Nox)", 
                             group_col =  c("#e74a32","#0da9ce"),
                             cluster_col = c("#ea5c6f", "#f7905a", "#e187cb", "#fb948d", "#e2b159", "#ebed6f", "#b2db87", "#7ee7bb"),
@@ -338,7 +338,7 @@ volcano1 <- sce_volcanoplot(DEG,
                             )
 
 volcano1 <- sce_volcanoplot(DEG1,
-                           levels = levels, 
+                            levels = levels, 
                             title = "Male vs Female (Hox)", 
                             group_col =  c("#e74a32","#0da9ce"),
                             cluster_col = c("#ea5c6f", "#f7905a", "#e187cb", "#fb948d", "#e2b159", "#ebed6f", "#b2db87", "#7ee7bb"),
