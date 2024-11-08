@@ -309,6 +309,7 @@ pseu2
 
 ### Volcano plot ###
 source("./FindMarker_genes.R")
+source("./sce_volcanoplot.R")
 P7_integrated <- PrepSCTFindMarkers(P7_integrated)
 Idents(P7_integrated) <- "Celltype_fine"
 DEG <- FindMarker_genes(object = subset(P7_integrated, Oxygen == "Hyperoxia"), 
@@ -318,7 +319,6 @@ DEG <- FindMarker_genes(object = subset(P7_integrated, Oxygen == "Hyperoxia"),
                                              logfc.threshold = 0,  
                                              min.cells.group = 1
                        )  
-write.csv(DEG, file = "./P7_Hyperoxia_Male_vs_Female_DEGs.csv")
 
 DEG1 <- FindMarker_genes(object = subset(P7_integrated, Oxygen == "Normoxia"), 
                                          assay = "SCT",
@@ -327,8 +327,24 @@ DEG1 <- FindMarker_genes(object = subset(P7_integrated, Oxygen == "Normoxia"),
                                          logfc.threshold = 0,  
                                          min.cells.group = 1
 )  
-write.csv(DEG1, file = "./P7_Normoxia_Male_vs_Female_DEGs.csv")
 
+levels <- c("gCap", "aCap", "Art", "Vein", "EndoMT", "Fibroblast", "Myofibroblast", "SMC")
+volcano1 <- sce_volcanoplot(DEG,
+                           levels = levels, 
+                            title = "Male vs Female (Nox)", 
+                            group_col =  c("#e74a32","#0da9ce"),
+                            cluster_col = c("#ea5c6f", "#f7905a", "#e187cb", "#fb948d", "#e2b159", "#ebed6f", "#b2db87", "#7ee7bb"),
+                            ptype = "pvalue"
+                            )
+
+volcano1 <- sce_volcanoplot(DEG1,
+                           levels = levels, 
+                            title = "Male vs Female (Hox)", 
+                            group_col =  c("#e74a32","#0da9ce"),
+                            cluster_col = c("#ea5c6f", "#f7905a", "#e187cb", "#fb948d", "#e2b159", "#ebed6f", "#b2db87", "#7ee7bb"),
+                            ptype = "pvalue"
+                            )
+wrap_plot(volcano1/volcano2)
 
 ### GSEA analysis ###
 library(msigdbr)
