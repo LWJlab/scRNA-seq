@@ -313,20 +313,20 @@ source("./sce_volcanoplot.R")
 P7_integrated <- PrepSCTFindMarkers(P7_integrated)
 Idents(P7_integrated) <- "Celltype_fine"
 DEG <- FindMarker_genes(object = subset(P7_integrated, Oxygen == "Normoxia"), 
-                                             assay = "SCT",
-                                             clusters = c("gCap", "aCap", "Art", "Vein", "EndoMT", "Fibroblast", "Myofibroblast", "SMC"),
-                                             comparison = c("Sex", "Female", "Male"),
-                                             logfc.threshold = 0,  
-                                             min.cells.group = 1
+                        assay = "SCT",
+                        clusters = c("gCap", "aCap", "Art", "Vein", "EndoMT", "Fibroblast", "Myofibroblast", "SMC"),
+                        comparison = c("Sex", "Female", "Male"),
+                        logfc.threshold = 0,  
+                        min.cells.group = 1
                        )  
 
 DEG1 <- FindMarker_genes(object = subset(P7_integrated, Oxygen == "Hyperoxia"), 
-                                         assay = "SCT",
-                                         clusters = c("gCap", "aCap", "Art", "Vein", "EndoMT", "Fibroblast", "Myofibroblast", "SMC"),
-                                         comparison = c("Sex", "Female", "Male"),
-                                         logfc.threshold = 0,  
-                                         min.cells.group = 1
-)  
+                         assay = "SCT",
+                         clusters = c("gCap", "aCap", "Art", "Vein", "EndoMT", "Fibroblast", "Myofibroblast", "SMC"),
+                         comparison = c("Sex", "Female", "Male"),
+                         logfc.threshold = 0,  
+                         min.cells.group = 1
+                        )  
 
 levels <- c("gCap", "aCap", "Art", "Vein", "EndoMT", "Fibroblast", "Myofibroblast", "SMC")
 volcano1 <- sce_volcanoplot(DEG,
@@ -337,7 +337,7 @@ volcano1 <- sce_volcanoplot(DEG,
                             ptype = "pvalue"
                             )
 
-volcano1 <- sce_volcanoplot(DEG1,
+volcano2 <- sce_volcanoplot(DEG1,
                             levels = levels, 
                             title = "Male vs Female (Hox)", 
                             group_col =  c("#e74a32","#0da9ce"),
@@ -376,8 +376,6 @@ mmu_fgsea_sets <- c(c2_KEGG_mmu_fgsea_sets,
                     c5_GOBP_mmu_fgsea_sets
 )
 
-source("./FindMarker_genes.R")
-P7_integrated <- PrepSCTFindMarkers(P7_integrated)
 DEG2 <- FindMarker_genes(dataset = P7_integrated, 
                          assay = "SCT",
                          clusters = c("gCap", "aCap", "Art", "Vein", "EndoMT", "Fibroblast", "SMC", "Myofibroblast"),
