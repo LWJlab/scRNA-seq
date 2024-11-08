@@ -236,11 +236,11 @@ P7_EndoMT_dotplot
 
 P7_EndoMT_integrated <- subset(P7_integrated, Celltype_fine == "EndoMT")
 P7_EndoMT_Hyperoxia_dotplot <- sce_dotplot(subset(P7_EndoMT_integrated, Oxygen == "Hyperoxia"),
-                                           assay = 'SCT',
-                                           idents = 'Sex',
+                                           assay = "SCT",
+                                           idents = "Sex",
                                            markers = marker1,
-                                           levels = c('Female', 'Male'),
-                                           title = 'EndoMT (Hyperoxia)',
+                                           levels = c("Female", "Male"),
+                                           title = "EndoMT (Hyperoxia)",
                                            title_size = 10
                                           )
 
@@ -307,6 +307,28 @@ pseu2 <- pseudotime_umap(P7_integrated,
 )
 pseu2
 
+### Volcano plot ###
+source("./FindMarker_genes.R")
+P7_integrated <- PrepSCTFindMarkers(P7_integrated)
+Idents(P7_integrated) <- "Celltype_fine"
+DEG <- FindMarker_genes(object = subset(P7_integrated, Oxygen == "Hyperoxia"), 
+                                             assay = "SCT",
+                                             clusters = c("gCap", "aCap", "Art", "Vein", "EndoMT", "Fibroblast", "Myofibroblast", "SMC"),
+                                             comparison = c("Sex", "Female", "Male"),
+                                             logfc.threshold = 0,  
+                                             min.cells.group = 1
+)  
+write.csv(GSE151974_Hyperoxia_DEGs, file = "GSE151974_Hyperoxia_Male_vs_Female_DEGs.csv")
+
+DEG1 <- FindMarker_genes(object = subset(GSE151974_subset_P7_integrated1, Oxygen=="Normoxia"), 
+                                            assay = "SCT",
+                                            clusters = c("gCap","aCap", "Art", "Vein", "EndoMT","Fibroblast","Myofibroblast","SMC"),
+                                            comparison = c("Sex", "Female", "Male"),
+                                            logfc.threshold = 0,  
+                                            min.cells.group = 1
+)  
+write.csv(DEG, file = "GSE151974_Normoxia_Male_vs_Female_DEGs.csv")
+
 
 ### GSEA analysis ###
 library(msigdbr)
@@ -340,16 +362,16 @@ mmu_fgsea_sets <- c(c2_KEGG_mmu_fgsea_sets,
 
 source("./FindMarker_genes.R")
 P7_integrated <- PrepSCTFindMarkers(P7_integrated)
-DEGs <- FindMarker_genes(dataset = P7_integrated, 
+DEG2 <- FindMarker_genes(dataset = P7_integrated, 
                          assay = "SCT",
                          clusters = c("gCap", "aCap", "Art", "Vein", "EndoMT", "Fibroblast", "SMC", "Myofibroblast"),
                          comparison = c("Oxygen", "Normoxia", "Hyperoxia"),
                          logfc.threshold = 0,  
                          min.cells.group = 1
-)  
+                        )  
 
 source("./sce_GSEA.R")
-gsea_res <- sce_GSEA(DEGs, pathway = mmu_fgsea_sets)
+gsea_res <- sce_GSEA(DEG1, pathway = mmu_fgsea_sets)
 
 gsea_res1 <- gsea_res
 gsea_res1 <- do.call(rbind, gsea_res1) %>% t()
