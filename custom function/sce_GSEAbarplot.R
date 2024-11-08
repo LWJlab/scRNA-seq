@@ -37,7 +37,50 @@ sce_GSEAbarplot <- function(object, # A dataframe containing Pathway1, Pathway2 
   df$Pathway2 <- df$Pathway2 %>% factor() %>% fct_inorder() %>% fct_rev()
   
   maxPathway <- maxPathway
-  
+
+  if (all(df$NES<=0)){
+     df$Pathway2 <- fct_inorder(df$Pathway2) %>% fct_rev()
+    
+     barplot <- ggplot(df, aes(x = NES, y = Pathway2, fill = Pathway1))+
+                geom_col()+ 
+                geom_text(aes(label = Label), 
+                color = num_color,
+                size = num_size,
+                hjust = 0.5,
+                nudge_x = 0) + 
+      scale_x_continuous(limits = xlim,
+                         expand = expansion(mult = c(0, 0))) + 
+      labs(x = "NES", y = "", title = title) +
+      scale_fill_manual(values = pathway_color) 
+    
+      g <- ggplot_build(barplot)
+      mycol <- g$data[[1]]["fill"]
+      col <- rev(mycol$fill)
+    
+      num <- rev(df$NES)
+      index <- which(num == 0)
+      col[index] <- category_color
+    
+    
+      theme <-  theme_bw()+
+                theme(plot.title = element_text(size = rel(1),
+                      hjust = 0.5,
+                      face = 'plain'),
+                axis.title = element_text(size = rel(1)),
+                axis.text.x = element_text(size = text_x_size,
+                                           color = 'black'),
+                axis.text.y = element_text(size = text_y_size,
+                                           color = col,
+                                           face = 'bold'),
+                legend.position = "none",
+                plot.margin = unit(x = c(top.mar = 0.5,
+                                         right.mar = 0.2,
+                                         left.mar = 0.2,
+                                         bottom.mar = 0.2),
+                              units = 'inches')) 
+    
+       barplot1 <- barplot + theme + coord_cartesian(clip = 'off')  
+  }else{
   if(length(levels) == 1){
     raw_row_names <- df$Pathway1
     raw_row <- levels[1]
