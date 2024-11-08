@@ -376,6 +376,7 @@ mmu_fgsea_sets <- c(c2_KEGG_mmu_fgsea_sets,
                     c5_GOBP_mmu_fgsea_sets
 )
 
+Idents(P7_integrated) <- 'Celltype_fine'
 DEG2 <- FindMarker_genes(dataset = P7_integrated, 
                          assay = "SCT",
                          clusters = c("gCap", "aCap", "Art", "Vein", "EndoMT", "Fibroblast", "SMC", "Myofibroblast"),
@@ -385,11 +386,34 @@ DEG2 <- FindMarker_genes(dataset = P7_integrated,
                         )  
 
 source("./sce_GSEA.R")
-gsea_res <- sce_GSEA(DEG1, pathway = mmu_fgsea_sets)
+gsea_res <- sce_GSEA(DEG2, pathway = mmu_fgsea_sets)
+gsea_res1 <- do.call(rbind, gsea_res) %>% t()
+#write.csv(gsea_res1, file = "./P7_Hyperoxia_vs_Normoxia_MSigDB_C2CP_GSEA_results.csv", row.names = F)
 
-gsea_res1 <- gsea_res
-gsea_res1 <- do.call(rbind, gsea_res1) %>% t()
-#write.csv(gsea_res1, file = "./P7_MSigDB_C2CP_GSEA_results.csv", row.names = F)
+DEG3 <- FindMarker_genes(object = subset(P7_integrated, Oxygen == 'Normoxia'), 
+                         assay = 'SCT',
+                         clusters = c('EndoMT'),
+                         comparison = c('Sex', 'Female', 'Male'),
+                         logfc.threshold = 0,  
+                         min.cells.group = 1
+                        )  
+
+gsea_res2 <- sce_GSEA(DEG3, pathway = mmu_fgsea_sets)
+gsea_res3 <- do.call(rbind, gsea_res2) %>% t()
+#write.csv(gsea_res3, file = "./P7_Normoxia_EndoMT_Male_vs_Female_MSigDB_C2CP_GSEA_results.csv", row.names = F)
+
+DEG4 <- FindMarker_genes(object = subset(P7_integrated, Oxygen == 'Hyperoxia'), 
+                         assay = 'SCT',
+                         clusters = c('EndoMT'),
+                         comparison = c('Sex', 'Female', 'Male'),
+                         logfc.threshold = 0,  
+                         min.cells.group = 1
+                         )  
+
+gsea_res4 <- sce_GSEA(DEG4, pathway = mmu_fgsea_sets)
+gsea_res5 <- do.call(rbind, gsea_res4) %>% t()
+#write.csv(gsea_res5, file = "./P7_Hyperoxia_EndoMT_Male_vs_Female_MSigDB_C2CP_GSEA_results.csv", row.names = F)
+
 
 
 ### GSEA sigPathway visualization ###
