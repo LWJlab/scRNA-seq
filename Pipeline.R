@@ -210,7 +210,7 @@ P7_dotplot <- sce_dotplot(P7_integrated,
 P7_dotplot
 
 
-### Dotplot of metabolism-related genes ###
+### Dotplot of metabolic genes ###
 marker1 = c("Adh5", "Aldh3a2", "Gapdh", "Gpi1", "Ldha", "Pkm", "Slc2a1", # Glycolysis
             "G6pdx", "Pgd", "Taldo1", "Tkt", # Pentose phosphate pathway
             "Dhfr", "Mthfd1", "Mthfd2", "Shmt1", "Shmt2", "Slc25a32", # One carbon metabolism
@@ -234,6 +234,17 @@ P7_EndoMT_dotplot <- sce_dotplot(subset(P7_integrated, idents = c("EndoMT")),
 
 P7_EndoMT_dotplot
 
+P7_EndoMT_integrated <- subset(P7_integrated, Celltype_fine == "EndoMT")
+P7_EndoMT_Hyperoxia_dotplot <- sce_dotplot(subset(P7_EndoMT_integrated, Oxygen == "Hyperoxia"),
+                                           assay = 'SCT',
+                                           idents = 'Sex',
+                                           markers = marker1,
+                                           levels = c('Female', 'Male'),
+                                           title = 'EndoMT (Hyperoxia)',
+                                           title_size = 10
+                                          )
+
+P7_EndoMT_Hyperoxia_dotplot
 
 ### Vlnplot of EndoMT markers ###
 source("./Split_Vln_stacked.R")
