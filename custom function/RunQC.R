@@ -1,6 +1,6 @@
 RunQC <- function(object, # scobj
                   org = 'hsa', 
-                  LowerFeatureCutoff = 200,
+                  LowerFeatureCutoff = 200, # The lower cutoff of nFeature
                   UpperFeatureCutoff = "MAD",
                   UpperMitoCutoff = 10, 
                   Hb = T, # percent.Hb
