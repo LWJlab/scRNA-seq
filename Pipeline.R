@@ -400,7 +400,7 @@ DEG3 <- FindMarker_genes(object = subset(P7_integrated, Oxygen == 'Normoxia'),
 
 gsea_res2 <- sce_GSEA(DEG3, pathway = mmu_fgsea_sets)
 gsea_res3 <- do.call(rbind, gsea_res2) %>% t()
-#write.csv(gsea_res3, file = "./P7_Normoxia_EndoMT_Male_vs_Female_MSigDB_C2CP_GSEA_results.csv", row.names = F)
+#write.csv(gsea_res3, file = "./P7_EndoMT_Normoxia_Male_vs_Female_MSigDB_C2CP_GSEA_results.csv", row.names = F)
 
 DEG4 <- FindMarker_genes(object = subset(P7_integrated, Oxygen == 'Hyperoxia'), 
                          assay = 'SCT',
@@ -412,7 +412,7 @@ DEG4 <- FindMarker_genes(object = subset(P7_integrated, Oxygen == 'Hyperoxia'),
 
 gsea_res4 <- sce_GSEA(DEG4, pathway = mmu_fgsea_sets)
 gsea_res5 <- do.call(rbind, gsea_res4) %>% t()
-#write.csv(gsea_res5, file = "./P7_Hyperoxia_EndoMT_Male_vs_Female_MSigDB_C2CP_GSEA_results.csv", row.names = F)
+#write.csv(gsea_res5, file = "./P7_EndoMT_Hyperoxia_Male_vs_Female_MSigDB_C2CP_GSEA_results.csv", row.names = F)
 
 
 
@@ -448,13 +448,56 @@ bar <- sce_GSEAbarplot(sigPathway,
                                          "Immune system" = "#E78AC3"),
                        title = "Hyperoxia vs. Normoxia (EndoMT)",
                        title_size = rel(1),
-                       num_size = 2.5,
+                       num_size = 0,
                        text_x_size = rel(1),
                        text_y_size = rel(1),
                        xlim = c(0, 2.3))
 
 bar
 
+sigPathway1 <- read.csv("./P7_EndoMT_Normoxia_Male_vs_Female_MSigDB_C2CP_GSEA_sigPathway.csv", header = T)
+
+levels <- c("Signal transduction",
+            "Immune system")
+
+bar1 <- sce_GSEAbarplot(sigPathway1, 
+                        levels = levels[1:2], 
+                        maxPathway = c('Tgfb receptor signaling in EMT',
+                                       'Positive regulation of IL4 production'),
+                        title = 'Male vs Female (EndoMT)',
+                        category_color = 'grey10',
+                        pathway_color = c("Signal transduction" = "#6a3d9a",
+                                          "Immune system" = '#E78AC3'),
+                        title_size = rel(1),
+                        num_color = 'black',
+                        num_size = 0,
+                        text_x_size = rel(1),
+                        text_y_size = rel(1),
+                        xlim = c(-2.7, 3.2))
+
+bar1
+
+sigPathway2 <- read.csv("./P7_EndoMT_Hyperoxia_Male_vs_Female_MSigDB_C2CP_GSEA_sigPathway.csv", header = T)
+
+levels <- c("Signal transduction",
+            "Immune system")
+
+bar2 <- sce_GSEAbarplot(sigPathway2,
+                       levels = levels[1:2],
+                       maxPathway = c('SMAD2/3/4 transcriptional activity',
+                                      'Positive regulation of IL6 production'),
+                       title = 'Male vs Female (EndoMT)',
+                       category_color = 'grey10',
+                       pathway_color = c("Signal transduction" = "#6a3d9a",
+                                         "Immune system" = '#E78AC3'),
+                       title_size = rel(1),
+                       num_color = 'black',
+                       num_size = 0,
+                       text_x_size = rel(1),
+                       text_y_size = rel(1),
+                       xlim = c(-2.5, 2.5))
+
+bar2
 
 ### P14 seperation ###
 P14_subset <- subset(subset, idents = c("P14_Hyperoxia", "P14_Normoxia"))
