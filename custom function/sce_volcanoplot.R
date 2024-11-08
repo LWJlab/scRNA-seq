@@ -9,12 +9,12 @@ sce_volcanoplot <- function(object, # A dataframe including gene, cluster, p_val
                             text_size = 4.5, # The size of cluster text (Default: 4.5)
                             text_col = "black", # The color of cluster text (Default: "black")
                             title = NULL, # The title of volcano plot
-                            group_col =  c('#e74a32','#0da9ce'),
-                            cluster_col = NULL,
-                            ptype = c('pvalue', 'adjpvalue'),
-                            pvalue_cutoff = 0.05, # The size of x-axis text (Default: 10)
-                            adjpvalue_cutoff = 0.05,
-                            log2FC_cutoff = 0.25 # The size of y-axis text (Default: 10)
+                            group_col =  c('#e74a32','#0da9ce'), # The color codes for up- and down-regulated genes
+                            cluster_col = NULL, # The color codes for cluster
+                            ptype = c('pvalue', 'adjpvalue'), 
+                            pvalue_cutoff = 0.05, # The cutoff of pvalue (default 0.05)
+                            adjpvalue_cutoff = 0.05, # The cutoff of adjpvalue (default 0.05)
+                            log2FC_cutoff = 0.25 # The cutoff of log2FoldChange (default 0.25)
                             ){
   
   suppressPackageStartupMessages({
