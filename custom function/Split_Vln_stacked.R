@@ -2,7 +2,7 @@ Split_Vln_stacked <- function(object, # scobj
                               assay, # Name of assay to use, defaults to the active assay
                               feature, # A list of genes
                               split.by = NULL, # Split clusters into different groups
-                              split.plot = NULL, # Split VlnPlot
+                              split.plot = F, # Split VlnPlot
                               pt.size, # The size of dot
                               face = 'bold', # # The font of x-axis text and y-axis title (Default: bold)
                               text_x_size = 10, # The size of x-axis text (Default: 10)
