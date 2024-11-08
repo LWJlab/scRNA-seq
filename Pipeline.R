@@ -92,7 +92,7 @@ cluster_ids <- c("gCap",          #cluster 0
 
 names(cluster_ids) <- levels(P7_integrated)
 P7_integrated <- RenameIdents(P7_integrated, cluster_ids)
-P7_integrated$Celltype <- Idents(P7_integrated)
+P7_integrated$Celltype_fine <- Idents(P7_integrated)
 
 Idents(P7_integrated) <- 'seurat_clusters'
 cluster_ids1 <- c("Endothelium",   #cluster 0
@@ -136,7 +136,7 @@ cluster_atlas <- cellatlas_umap(P7_integrated,
 cluster_atlas
 
 celltype_atlas <- cellatlas_umap(P7_integrated, 
-                                 idents = 'Celltype',
+                                 idents = 'Celltype_fine',
                                  levels = c('gCap',
                                             'aCap',
                                             'Art',
@@ -154,7 +154,7 @@ celltype_atlas <- cellatlas_umap(P7_integrated,
                                  dot_alpha = 1, 
                                  label_size = 4, 
                                  label_color = F
-)
+                                 )
 celltype_atlas
 
 oxygen_atlas <- cellatlas_umap(P7_integrated, 
@@ -169,7 +169,7 @@ oxygen_atlas <- cellatlas_umap(P7_integrated,
                                dot_alpha = 1, 
                                label_size = 4, 
                                label_color = T
-)
+                               )
 oxygen_atlas
 
 
@@ -187,7 +187,7 @@ marker = c('Gpihbp1', 'Kit', # gCap
 
 P7_dotplot <- sce_dotplot(P7_integrated,
                           assay = 'SCT',
-                          idents = 'Celltype',
+                          idents = 'Celltype_fine',
                           markers = marker,
                           levels = c('gCap',
                                      'aCap',
@@ -197,8 +197,8 @@ P7_dotplot <- sce_dotplot(P7_integrated,
                                      'Fibroblast',
                                      'Myofibroblast',
                                      'SMC'
-                          ) 
-)
+                                    ) 
+                          )
 
 P7_dotplot
 
@@ -213,7 +213,7 @@ marker1 = c('Adh5', 'Aldh3a2', 'Gapdh', 'Gpi1', 'Ldha', 'Pkm', 'Slc2a1', # Glyco
             'Acly', 'Acsl1', 'Acsl4', 'Acaca', 'Degs1', 'Elovl6', 'Fasn', 'Scd1', 'Slc25a1', 'Thrsp', # Fatty acid synthesis
             'Apoe', 'Lipa', 'Lipe', 'Lpl', 'Mttp', 'Pnpla2', # Lipid metabolism and transport
             'Cyc1', 'Ndufs1', 'Ndufs2', 'Ndufs3', 'Pdha1', 'Sdha' # Oxidative phosphorylation
-)
+            )
 
 
 P7_EndoMT_dotplot <- sce_dotplot(subset(P7_integrated, idents = c('EndoMT')),
@@ -223,7 +223,7 @@ P7_EndoMT_dotplot <- sce_dotplot(subset(P7_integrated, idents = c('EndoMT')),
                                  levels = c('Normoxia', 'Hyperoxia'),
                                  title = 'EndoMT',
                                  title_size = 10
-)
+                                )
 
 P7_EndoMT_dotplot
 
@@ -238,8 +238,8 @@ levels = c('gCap',
            'Fibroblast',
            'Myofibroblast',
            'SMC')
-P7_integrated$Celltype <- factor(P7_integrated$Celltype, levels = levels) 
-Idents(P7_integrated) <- 'Celltype'
+P7_integrated$Celltype_fine <- factor(P7_integrated$Celltype_fine, levels = levels) 
+Idents(P7_integrated) <- 'Celltype_fine'
 
 Split_Vln_stacked(P7_integrated,
                   assay = 'SCT',
@@ -269,7 +269,7 @@ sds <- slingshot(P7_integrated1,
 source('./pseudotime_umap.R')
 pseu1 <- pseudotime_umap(P7_integrated,
                          pseudotime_obj = sds,
-                         idents = 'Celltype',  
+                         idents = 'Celltype_fine',  
                          sub_idents = 'slingPseudotime_1', 
                          dot_color = c("#440154FF", "#FDE725FF"),
                          dot_size = 0.5, 
@@ -280,7 +280,7 @@ pseu1
 
 pseu2 <- pseudotime_umap(P7_integrated,
                          pseudotime_obj = sds,
-                         idents = 'Celltype',  
+                         idents = 'Celltype_fine',  
                          sub_idents = 'slingPseudotime_2', 
                          dot_color = c("#440154FF", "#FDE725FF"),
                          dot_size = 0.5, 
@@ -411,14 +411,14 @@ p2 <- DotPlot(P14_integrated,
                            'Pecam1', 'Eng', 'Cd34', 'Cdh5', # Gen ECs
                            'Col1a1', 'Col1a2', 'Col3a1', 'Fn1', 'Tagln', 'Acta2', 'Myl9', 'Myh11', # Mesenchyme
                            'Tgfbi','Wnt5a' #Myofibroblast
-             ) 
-) +
-  theme(axis.title = element_blank(),
-        axis.line = element_blank(),
-        axis.ticks.x = element_blank(),
-        axis.text.x = element_text(size = 10),
-        panel.background = element_rect(color = 'black'))+
-  coord_flip()
+                           ) 
+             ) +
+      theme(axis.title = element_blank(),
+            axis.line = element_blank(),
+            axis.ticks.x = element_blank(),
+            axis.text.x = element_text(size = 10),
+            panel.background = element_rect(color = 'black'))+
+      coord_flip()
 
 p3 <- DimPlot(P14_integrated, 
               reduction = "umap", 
@@ -445,7 +445,7 @@ cluster_ids2 <- c("Fibroblast",    #cluster 0
 
 names(cluster_ids2) <- levels(P14_integrated)
 P14_integrated <- RenameIdents(P14_integrated, cluster_ids2)
-P14_integrated$Celltype <- Idents(P14_integrated)
+P14_integrated$Celltype_fine <- Idents(P14_integrated)
 
 Idents(P14_integrated) <- 'seurat_clusters'
 cluster_ids3 <- c("Fibroblast",    #cluster 0
