@@ -139,7 +139,7 @@ cluster_atlas <- cellatlas_umap(P7_integrated,
                                 dot_alpha = 1, 
                                 label_size = 4, 
                                 label_color = F 
-)
+                               )
 cluster_atlas
 
 celltype_atlas <- cellatlas_umap(P7_integrated, 
@@ -282,7 +282,7 @@ sds <- slingshot(P7_integrated1,
                  clusterLabels = "Celltype_main",
                  reducedDim = "UMAP" ,
                  start.clus = "Endothelium"
-)
+                )
 
 source("./pseudotime_umap.R")
 pseu1 <- pseudotime_umap(P7_integrated,
@@ -293,7 +293,7 @@ pseu1 <- pseudotime_umap(P7_integrated,
                          dot_size = 0.5, 
                          dot_alpha = 1, 
                          label_size = 4
-)
+                        )
 pseu1
 
 pseu2 <- pseudotime_umap(P7_integrated,
@@ -304,7 +304,7 @@ pseu2 <- pseudotime_umap(P7_integrated,
                          dot_size = 0.5, 
                          dot_alpha = 1, 
                          label_size = 4
-)
+                        )
 pseu2
 
 ### Volcano plot ###
@@ -376,7 +376,7 @@ mmu_fgsea_sets <- c(c2_KEGG_mmu_fgsea_sets,
                     c2_REACTOME_mmu_fgsea_sets,
                     c2_WIKIPATHWAYS_mmu_fgsea_sets,
                     c5_GOBP_mmu_fgsea_sets
-)
+                   )
 
 Idents(P7_integrated) <- "Celltype_fine"
 DEG2 <- FindMarker_genes(dataset = P7_integrated, 
@@ -564,7 +564,7 @@ cluster_ids2 <- c("Fibroblast",    #cluster 0
                   "SMC",           #cluster 10
                   "Fibroblast",    #cluster 11
                   "Fibroblast"     #cluster 12
-)
+                 )
 
 names(cluster_ids2) <- levels(P14_integrated)
 P14_integrated <- RenameIdents(P14_integrated, cluster_ids2)
@@ -584,7 +584,7 @@ cluster_ids3 <- c("Fibroblast",    #cluster 0
                   "SMC",           #cluster 10
                   "Fibroblast",    #cluster 11
                   "Fibroblast"     #cluster 12
-)
+                 )
 
 names(cluster_ids3) <- levels(P14_integrated)
 P14_integrated <- RenameIdents(P14_integrated, cluster_ids3)
