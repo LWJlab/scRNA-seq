@@ -46,7 +46,7 @@ cellatlas_umap <- function(object, # scobj
              axis.title = element_blank(),  
              axis.text = element_blank(), 
              axis.ticks = element_blank(),
-             panel.background = element_rect(fill = 'white'), #背景色
+             panel.background = element_rect(fill = 'white'), 
              plot.background = element_rect(fill="white"),
              legend.position = 'none' ) +
        geom_segment(aes(x = min(df$UMAP_1) , 
