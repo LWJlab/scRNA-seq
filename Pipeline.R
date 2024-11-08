@@ -10,8 +10,8 @@ library(patchwork)
 options(stringsAsFactors = FALSE)
 
 ### Data importing ###
-raw_count <- read.csv("GSE151974_raw_umi_matrix_postfilter.csv", row.names = 1) # https://ftp.ncbi.nlm.nih.gov/geo/series/GSE151nnn/GSE151974/suppl/GSE151974%5Fcell%5Fmetadata%5Fpostfilter.csv.gz
-metadata <- read.csv("GSE151974_cell_metadata_postfilter.csv", row.names = 1) # https://ftp.ncbi.nlm.nih.gov/geo/series/GSE151nnn/GSE151974/suppl/GSE151974%5Fraw%5Fumi%5Fmatrix%5Fpostfilter.csv.gz
+raw_count <- read.csv("GSE151974_raw_umi_matrix_postfilter.csv", row.names = 1) # Download: https://ftp.ncbi.nlm.nih.gov/geo/series/GSE151nnn/GSE151974/suppl/GSE151974%5Fcell%5Fmetadata%5Fpostfilter.csv.gz
+metadata <- read.csv("GSE151974_cell_metadata_postfilter.csv", row.names = 1) # Download: https://ftp.ncbi.nlm.nih.gov/geo/series/GSE151nnn/GSE151974/suppl/GSE151974%5Fraw%5Fumi%5Fmatrix%5Fpostfilter.csv.gz
 
 sce <- CreateSeuratObject(counts = raw_count,
                           meta.data = metadata)
@@ -310,7 +310,9 @@ pseu2
 ### Volcano plot ###
 source("./FindMarker_genes.R")
 source("./sce_volcanoplot.R")
+
 P7_integrated <- PrepSCTFindMarkers(P7_integrated)
+
 Idents(P7_integrated) <- "Celltype_fine"
 DEG <- FindMarker_genes(object = subset(P7_integrated, Oxygen == "Normoxia"), 
                         assay = "SCT",
@@ -598,3 +600,249 @@ table(GSE151974_subset_P7_integrated1$Celltype_main, GSE151974_subset_P7_integra
 ###################################
 ##### GEO accession:GSE211356 #####
 ###################################
+
+### Data importing ###
+fs=list.files(pattern = 'GSM.') # Download: https://www.ncbi.nlm.nih.gov/geo/download/?acc=GSE211356&format=file
+fs
+samples=str_split(fs, '_', simplify = T)[, 1]
+
+lapply(unique(samples), function(x){
+  y = fs[grepl(x, fs)]
+  folder = paste0(str_split(y[1], '_', simplify = T)[, 1])
+  dir.create(folder, recursive = T)
+
+  file.rename(paste0(y[1]), file.path(folder, "barcodes.tsv.gz"))
+  file.rename(paste0(y[2]), file.path(folder, "features.tsv.gz"))
+  file.rename(paste0(y[3]), file.path(folder, "matrix.mtx.gz"))
+})
+fs_name <- c('GSM6467309', 'GSM6467310', 'GSM6467311', 'GSM6467312')
+sce <- lapply(fs_name, function(x){
+              a = Read10X(x)
+              sce <- CreateSeuratObject(a)
+              })
+
+
+sce1 <- merge(x = sce[[1]],
+              y = c(sce[[2]], sce[[3]], sce[[4]]),
+              add.cell.ids = c('GSM6467309', 'GSM6467310', 'GSM6467311', 'GSM6467312'),
+              merge.data = TRUE)
+
+### Quality control ###
+source('./RunQC.R')
+sce1 <- RunQC(sce1,
+              org = 'mus', 
+              LowerFeatureCutoff = 200, 
+              UpperFeatureCutoff = "MAD", 
+              UpperMitoCutoff = 5, 
+              Hb = F,
+              doubletdetection = T, 
+              decontXCutoff = 0.2,
+              dir = "./")
+
+
+orig_ident <- sapply(strsplit(rownames(sce1@meta.data), "_"), function(x) x[1])
+GSE211356_sce1 <- AddMetaData(sce1, 
+                              metadata = orig_ident,
+                              col.name = 'orig.ident')
+
+sce1$Oxygen <- c(rep('Hyperoxia', 8633),
+                 rep('Hyperoxia', 6926),
+                 rep('Normoxia', 7979),
+                 rep('Normoxia', 10566))
+
+sce1$Sex <- c(rep('Female', 8633),
+              rep('Male', 6926),
+              rep('Female', 7979),
+              rep('Male', 10566))
+
+sce1@meta.data <- sce1@meta.data[-4]
+
+### ProcessExper ###
+sce_integrated = processExper(sce1, 
+                              org = 'mus',
+                              cyclescoring = F,
+                              sct.method = T,
+                              reduction = 'cca')
+
+### Cell clustering and dimensional reduction ###
+sce_integrated <- RunPCA(sce_integrated)
+dims=1:40
+sce_integrated <- RunUMAP(sce_integrated,
+                          dims = dims,
+                          reduction.name = "umap") %>%
+                  FindNeighbors(dims = dims) %>%
+                  FindClusters(resolution = c(seq(0, 1, .1)))
+
+clustree(sce_integrated) # Select suitable resolution
+
+sce_integrated <- FindClusters(sce_integrated, resolution = 0.3)
+
+### Cell annotation ###
+marker = c('Epcam', # Epithelium
+           'Pecam1', # Endothelium
+           'Col1a1', # Mesenchyme
+           'Ptprc' # Immune
+           )
+
+p <- DotPlot(sce_integrated, 
+             assay = 'SCT',
+             features = marker
+             )+
+  theme(axis.title = element_blank(),
+        axis.line = element_blank(),
+        axis.ticks.x = element_blank(),
+        axis.text.x = element_text(size = 10),
+        panel.background = element_rect(color = 'black'),
+        legend.position = 'none')+
+  coord_flip()
+
+p1 <- DimPlot(sce_integrated, 
+              reduction = "umap", 
+              group.by = "seurat_clusters", 
+              label = T)
+wrap_plots(p + p1) # Reference
+
+
+cluster_ids <- c("Endothelium", #cluster 0
+                 "Epithelium",  #cluster 1
+                 "Immune",      #cluster 2
+                 "Epithelium",  #cluster 3
+                 'Endothelium', #cluster 4
+                 'Immune',      #cluster 5
+                 "Immune",      #cluster 6
+                 'Immune',      #cluster 7
+                 "Immune",      #cluster 8
+                 "Endothelium", #cluster 9
+                 "Immune",      #cluster 10
+                 "Mesenchyme",  #cluster 11
+                 "Mesenchyme",  #cluster 12
+                 "Endothelium", #cluster 13
+                 "Immune",      #cluster 14
+                 "Immune",      #cluster 15
+                 'Mesenchyme',  #cluster 16
+                 'Endothelium', #cluster 17
+                 'Immune',      #cluster 18
+                 'Immune',      #cluster 19
+                 'Other',      #cluster 20
+                 'Endothelium', #cluster 21
+                 'Epithelium',  #cluster 22
+                 'Immune',      #cluster 23
+                 'Other'       #cluster 24
+)
+
+names(cluster_ids) <- levels(sce_integrated)
+sce_integrated <- RenameIdents(sce_integrated, cluster_ids)
+sce_integrated$Celltype_main <- Idents(sce_integrated)
+
+### ECs and Mesenchyme seperation ###
+Idents(sce_integrated) <- 'Celltype_main'
+subset <- subset(sce_integrated, idents = c('Endothelium', 'Mesenchyme'))
+
+subset1 <- CreateSeuratObject(counts = subset@assays$RNA@counts,
+                              meta.data = subset@meta.data)
+
+
+###ProcessExper
+subset1 <- processExper(subset1, 
+                        org = 'mus',
+                        cyclescoring = F,
+                        sct.method = T,
+                        reduction = 'cca')
+
+
+### Cell clustering and dimensional reduction ###
+subset1 <- RunPCA(subset1)
+dims=1:40
+subset1 <- RunUMAP(subset1,
+                   dims = dims,
+                   reduction.name = "umap") %>%
+           FindNeighbors(dims = dims) %>%
+           FindClusters(resolution = c(seq(0, 1, .1)))
+
+clustree(subset1) #Find suitable resolution value
+
+subset1 <- FindClusters(subset1, resolution = 0.7)
+
+
+marker1 = c('Gpihbp1', 'Kit', #gCap
+            'Car4', 'Kdr', #aCap
+            'Cxcl12', 'Pcsk5', #Art
+            'Vegfc', 'Prss23', #Vein
+            'Ccl21a','Mmrn1', # Lymph
+            'Pecam1','Eng', 'Cd34', 'Cdh5', #Gen Endothelium
+            'Col1a1', 'Col1a2', 'Col3a1', 'Fn1', # Fibroblast
+            'Tagln', 'Acta2', 'Myl9','Myh11', # SMC
+            'Tgfbi','Wnt5a' # Myofibroblast
+            )
+
+p2 <- DotPlot(subset1, 
+              assay = 'SCT',
+              features = marker1
+              )+
+      theme(axis.title = element_blank(),
+            axis.line = element_blank(),
+            axis.ticks.x = element_blank(),
+            axis.text.x = element_text(size = 10),
+            panel.background = element_rect(color = 'black'))+
+      coord_flip()
+
+p3 <- DimPlot(subset1, 
+              reduction = "umap", 
+              group.by = "seurat_clusters", 
+              label = T)
+wrap_plots(p2 + p3) # Reference
+
+cluster_ids1 <- c("gCap",          #cluster 0
+                  "aCap",          #cluster 1
+                  "Art",           #cluster 2
+                  "gCap",          #cluster 3
+                  "Myofibroblast", #cluster 4
+                  "gCap",          #cluster 5
+                  "gCap",          #cluster 6
+                  "gCap",          #cluster 7
+                  "Art",           #cluster 8
+                  "gCap",          #cluster 9
+                  "aCap",          #cluster 10
+                  "Fibroblast",    #cluster 11
+                  "Vein",          #cluster 12
+                  "Fibroblast",    #cluster 13
+                  "Fibroblast",    #cluster 14
+                  "aCap",          #cluster 15
+                  "EndoMT",        #cluster 16
+                  "SMC",           #cluster 17
+                  "Lymph",         #cluster 18
+                  "aCap",          #cluster 19
+                  "Fibroblast",    #cluster 20
+                  "Fibroblast"     #cluster 21
+)
+
+names(cluster_ids) <- levels(subset1)
+subset1 <- RenameIdents(subset1, cluster_ids)
+subset1$Celltype_fine <- Idents(subset1)
+
+### Vlnplot of EndoMT markers ###
+Idents(subset1) <- 'Celltype_fine'
+subset2 <- subset(subset1, idents = c('gCap', 'aCap', 'Art', 'Vein', 'EndoMT', 'Fibroblast', 'Myofibroblast', 'SMC'))
+                  
+levels = c('gCap',
+           'aCap',
+           'Art',
+           'Vein',
+           'EndoMT',
+           'Fibroblast',
+           'Myofibroblast',
+           'SMC')
+subset2$Celltype_fine <- factor(subset2$Celltype_fine, levels = levels)
+
+Idents(subset2) <- 'Celltype_fine'
+
+Split_Vln_stacked(subset2,
+                  assay = 'SCT',
+                  feature = c('Acta2', 'Myl9', 'Tagln',
+                              'Cdh5', 'Eng', 'Pecam1'),
+                  pt.size = 0, 
+                  text_x_size = 12,
+                  text_y_size = 10,
+                  title_y_size = 14,
+                  cols = c("#ea5c6f", "#f7905a", "#e187cb", "#fb948d", "#e2b159", "#ebed6f", "#b2db87", "#7ee7bb")
+                 )
