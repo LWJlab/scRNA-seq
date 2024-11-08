@@ -25,31 +25,31 @@ sce_volcanoplot <- function(object, # A dataframe including gene, cluster, p_val
     library(scales)})
   
   if (ptype == "pvalue"){
-      up <- object %>%
-            filter(p_val < pvalue_cutoff & avg_log2FC > log2FC_cutoff) 
+    up <- object %>%
+          filter(p_val < pvalue_cutoff & avg_log2FC > log2FC_cutoff) 
   
-      up$group <- 'Significant upregulation'
+    up$group <- 'Significant upregulation'
     
-      down <- object %>% 
-              filter(p_val < pvalue_cutoff & avg_log2FC < -log2FC_cutoff) 
+    down <- object %>% 
+            filter(p_val < pvalue_cutoff & avg_log2FC < -log2FC_cutoff) 
     
-      down$group <- 'Significant downregulation'
+    down$group <- 'Significant downregulation'
   
-      df <- rbind(up, down)
+    df <- rbind(up, down)
   }
     
   if (ptype == "adjpvalue"){
-      up <- object %>%
-            filter(p_val_adj < adjpvalue_cutoff & avg_log2FC > log2FC_cutoff) 
+    up <- object %>%
+          filter(p_val_adj < adjpvalue_cutoff & avg_log2FC > log2FC_cutoff) 
     
-      up$group <- 'Significant upregulation'
+    up$group <- 'Significant upregulation'
     
-      down <- object %>% 
-              filter(p_val_adj < adjpvalue_cutoff & avg_log2FC < -log2FC_cutoff) 
+    down <- object %>% 
+            filter(p_val_adj < adjpvalue_cutoff & avg_log2FC < -log2FC_cutoff) 
     
-      down$group <- 'Significant downregulation'
+    down$group <- 'Significant downregulation'
     
-      df <- rbind(up, down)
+    df <- rbind(up, down)
   }
   
   df$group <- factor(df$group, levels = c('Significant upregulation', 'Significant downregulation'))
