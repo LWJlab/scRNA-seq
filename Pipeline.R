@@ -317,17 +317,17 @@ DEG <- FindMarker_genes(object = subset(P7_integrated, Oxygen == "Hyperoxia"),
                                              comparison = c("Sex", "Female", "Male"),
                                              logfc.threshold = 0,  
                                              min.cells.group = 1
-)  
-write.csv(GSE151974_Hyperoxia_DEGs, file = "GSE151974_Hyperoxia_Male_vs_Female_DEGs.csv")
+                       )  
+write.csv(DEG, file = "./P7_Hyperoxia_Male_vs_Female_DEGs.csv")
 
-DEG1 <- FindMarker_genes(object = subset(GSE151974_subset_P7_integrated1, Oxygen=="Normoxia"), 
-                                            assay = "SCT",
-                                            clusters = c("gCap","aCap", "Art", "Vein", "EndoMT","Fibroblast","Myofibroblast","SMC"),
-                                            comparison = c("Sex", "Female", "Male"),
-                                            logfc.threshold = 0,  
-                                            min.cells.group = 1
+DEG1 <- FindMarker_genes(object = subset(P7_integrated, Oxygen == "Normoxia"), 
+                                         assay = "SCT",
+                                         clusters = c("gCap", "aCap", "Art", "Vein", "EndoMT", "Fibroblast", "Myofibroblast", "SMC"),
+                                         comparison = c("Sex", "Female", "Male"),
+                                         logfc.threshold = 0,  
+                                         min.cells.group = 1
 )  
-write.csv(DEG, file = "GSE151974_Normoxia_Male_vs_Female_DEGs.csv")
+write.csv(DEG1, file = "./P7_Normoxia_Male_vs_Female_DEGs.csv")
 
 
 ### GSEA analysis ###
