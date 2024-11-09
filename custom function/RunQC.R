@@ -1,14 +1,14 @@
 RunQC <- function(object, # scobj
-                  org = 'hsa', 
-                  LowerFeatureCutoff = 200, # The lower cutoff of nFeature
-                  UpperFeatureCutoff = "MAD",
-                  UpperMitoCutoff = 10, 
-                  Hb = T, # percent.Hb
-                  HbCutoff = 0, 
-                  decontX = T,
-                  decontXCutoff = 0.2,
-                  doubletdetection = T,
-                  dir
+                  org = "hsa", # Species (Default: "hsa")
+                  LowerFeatureCutoff = 200, # The lower cutoff of nFeature_RNA (Default: 200)
+                  UpperFeatureCutoff = "MAD", # The upper cutoff of nFeature_RNA (Default: "MAD")
+                  UpperMitoCutoff = 10, # The upper cutoff of percent.mito (Default: 10)
+                  Hb = T, # Filter Hb-related genes or not
+                  HbCutoff = 0, # The cutoff of percent.hb (Default: 0)
+                  decontX = T, # Filter contamination or not
+                  decontXCutoff = 0.2, # The cutoff of contamination (Default: 0.2)
+                  doubletdetection = T, # Filter doublets or not
+                  dir # Output directory
 ){
   suppressPackageStartupMessages({
     library(Seurat)
