@@ -549,8 +549,6 @@ p3 <- DimPlot(P14_integrated,
               label = T)
 wrap_plots(p2 + p3) # Reference
 
-
-
 cluster_ids2 <- c("Fibroblast",    #cluster 0
                   "Myofibroblast", #cluster 1
                   "gCap",          #cluster 2
@@ -701,7 +699,6 @@ p1 <- DimPlot(sce_integrated,
               label = T)
 wrap_plots(p + p1) # Reference
 
-
 cluster_ids <- c("Endothelium", #cluster 0
                  "Epithelium",  #cluster 1
                  "Immune",      #cluster 2
@@ -741,7 +738,7 @@ subset1 <- CreateSeuratObject(counts = subset@assays$RNA@counts,
                               meta.data = subset@meta.data)
 
 
-###ProcessExper
+### ProcessExper ###
 subset1 <- processExper(subset1, 
                         org = "mus",
                         cyclescoring = F,
@@ -761,7 +758,6 @@ subset1 <- RunUMAP(subset1,
 clustree(subset1) #Find suitable resolution value
 
 subset1 <- FindClusters(subset1, resolution = 0.7)
-
 
 marker1 = c("Gpihbp1", "Kit", #gCap
             "Car4", "Kdr", #aCap
@@ -792,6 +788,7 @@ p3 <- DimPlot(subset1,
               label = T)
 wrap_plots(p2 + p3) # Reference
 
+### Cell annotation ###
 cluster_ids1 <- c("gCap",          #cluster 0
                   "aCap",          #cluster 1
                   "Art",           #cluster 2
